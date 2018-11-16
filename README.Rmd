@@ -1,0 +1,16 @@
+---
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Miscellaneous R Scripts
+
+Here is a collection of random scripts throughout my career that should be
+used as reference **only**. Some of these scripts *may* become prototypes for
+future package development.
+
+- - -
+*Last updated:* `r format(Sys.Date())`
