@@ -2,33 +2,53 @@
 # Title:         Function - Proportional Usage Text Bar
 # Author:        Brandon Monier (brandon.monier@sdstate.edu)
 # Created:       2018-05-07 11:04:16 CDT
-# Last Modified: 2018-05-17 09:08:18 CDT
+# Last Modified: 2018-12-14 17:31:10 EST
 #------------------------------------------------------------------------------
 
-makeTextBar <- function(
-    use, tot, char.use = "#", char.rem = " ", char.len = 25, 
-    char.end = c("[", "]")
-) {
-    prop.use <- use / tot
-    prop.rem <- 1 - prop.use
+makeTextBar <- function(use, 
+                        total, 
+                        charUse = "#", 
+                        charRem = " ", 
+                        charLen = 25, 
+                        charEnd = c("[", "]")) {
+    # Generates a text-based proportion bar for downstream applications
+    #
+    # Args:
+    #   use:     Number of units used in totalal size.
+    #   total:   Total number units in totalal size.
+    #   charUse: Text character to display used portion of bar. Default is
+    #            "#".
+    #   charRem: Text character to display unused portion of bar. Default is
+    #            " ".
+    #   charLen: Total number of characters used for bar. Default is 25 units.
+    #   charEnd: "Fancy" end pieces if your want them. Defaults to 
+    #            c("[", "]").
+    #
+    # Returns:
+    #   A vector containing strings.
 
-    num.use <- round(prop.use * char.len, 0)
+    propUse <- use / total
+    propRem <- 1 - propUse
 
-    if (num.use == 0) {
-        num.use <- 1
-    } else if (num.use == char.len) {
-        num.use <- char.len - 1
+    numUse <- round(propUse * charLen, 0)
+
+    if (use == 0) {
+        numUse <- 0
+    } else if (numUse == 0) {
+        numUse <- 1
+    } else if (numUse == charLen) {
+        numUse <- charLen - 1
     } else {
-        num.use
+        numUse
     }
 
-    num.rem <- char.len - num.use
+    numRem <- charLen - numUse
 
     text.bar <- paste0(
-        char.end[1], 
-        paste(rep(char.use, num.use), collapse = ""), 
-        paste(rep(char.rem, num.rem), collapse = ""), 
-        char.end[2]
+        charEnd[1], 
+        paste(rep(charUse, numUse), collapse = ""), 
+        paste(rep(charRem, numRem), collapse = ""), 
+        charEnd[2]
     )
     
     return(text.bar)
