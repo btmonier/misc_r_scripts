@@ -11,7 +11,8 @@ makeTextBar <- function(use,
                         charRem = " ", 
                         charLen = 25, 
                         charEnd = c("[", "]")) {
-    # Generates a text-based proportion bar for downstream applications
+    # Description:
+    #   Generates a text-based proportion bar for downstream applications
     #
     # Args:
     #   use:     Number of units used in totalal size.
