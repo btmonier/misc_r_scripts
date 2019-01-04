@@ -1,7 +1,7 @@
 # === 3D plots ======================================================
 
 ### Perlin noise generation
-perlin_noise <- function(
+perlinNoise <- function(
     n = 5,   m = 7,    # Size of the grid for the vector field
     N = 100, M = 100   # Dimension of the image
 ) {
@@ -61,7 +61,7 @@ randMat <- function(v, s) {
 ## Parameters
 N = 50
 M = 400
-perl <- perlin_noise(N = N, M = M, n = 7, m = 15)
+perl <- perlinNoise(N = N, M = M, n = 7, m = 15)
 x <- seq_len(N)
 y <- seq_len(M)
 z <- perl * 10
@@ -89,9 +89,9 @@ for (i in seq(0, iter)) {
         ltheta = -120,
         border = "#5e9bff",
         col = "#1c1c1c",
-        col.main = "#5e9bff",
-        main = "THERE IS NOBODY HERE",
-        family = "VCR OSD Mono"
+        col.main = "#5e9bff"
+        # main = "THERE IS NOBODY HERE",
+        # family = "VCR OSD Mono"
     )
     dev.off()
 }
