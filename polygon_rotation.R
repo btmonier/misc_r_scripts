@@ -6,8 +6,8 @@ par(pty = "s", mar = c(0.5, 0.5, 0.5, 0.5))
 plot(
     x = NA,
     y = NA,
-    xlim = c(-1, 1),
-    ylim = c(-1, 1),
+    xlim = c(-1.5, 1.5),
+    ylim = c(-1.5, 1.5),
     xlab = "",
     ylab = "",
     pch = 16,
@@ -15,25 +15,41 @@ plot(
     fg = NA,
     axes = FALSE
 )
-# abline(h = 0, v = 0, col = "gray60")
+abline(h = 0, v = 0, col = "gray60")
 
-tri <- data.frame(
-    x = c(0, 0.5, 0.5),
-    y = c(0, 0, 0.5)
-)
-polygon(x = tri$x, y = tri$y)
+tri <- matrix(c(0, 1, 1, 0, 0, 1), nrow = 2, byrow = TRUE)
+polygon(x = tri[1, ], y = tri[2, ])
 
-rotater <- function(x, y, theta = pi/6) {
-    x <- (x) * cos(theta) + (y) * sin(theta)
-    y <- (y) * cos(theta) - (x) * sin(theta)
-    return(list(x = x, y = y))
+
+triRotated <- matrix(c(c(0, 0, -1), c(0, 1, 1)), nrow = 2, byrow = TRUE)
+
+
+theta <- 90
+thetaRad <- theta * pi / 180
+x <- 1
+y <- 0
+round(x*cos(thetaRad) - y*sin(thetaRad), 0)
+round(x*sin(thetaRad) + y*cos(thetaRad), 0)
+
+
+
+
+
+rotater <- function(x, y, theta = 30) {
+    thetaRad <- theta * pi / 180
+    x <- round(x * cos(thetaRad) - y * sin(thetaRad), 0)
+    y <- round(x * sin(thetaRad) + y * cos(thetaRad), 0)
+    return(matrix(c(x, y), nrow = 2, byrow = TRUE))
 }
 
-triRotated <- rotater(tri$x, tri$y, theta = -pi/2)
-polygon(x = triRotated$x, y = triRotated$y)
+triRotated2 <- rotater(tri[1, ], tri[2, ], theta = 90)
 
-# triRotated <- rotater(tri$x, tri$y, theta = -pi)
-# polygon(x = triRotated$x, y = triRotated$y)
+tri
+triRotated
+triRotated2
+
+# polygon(x = tri[1, ], y = tri[2, ])
+# polygon(x = triRotated2[1, ], y = triRotated2[2, ])
 
 
 
