@@ -21,35 +21,54 @@ tri <- matrix(c(0, 1, 1, 0, 0, 1), nrow = 2, byrow = TRUE)
 polygon(x = tri[1, ], y = tri[2, ])
 
 
-triRotated <- matrix(c(c(0, 0, -1), c(0, 1, 1)), nrow = 2, byrow = TRUE)
+tri <- data.frame(
+    x = c(0, 1, 1),
+    y = c(0, 0, 1)
+)
 
-
-theta <- 90
-thetaRad <- theta * pi / 180
-x <- 1
-y <- 0
-round(x*cos(thetaRad) - y*sin(thetaRad), 0)
-round(x*sin(thetaRad) + y*cos(thetaRad), 0)
-
-
-
-
-
-rotater <- function(x, y, theta = 30) {
-    thetaRad <- theta * pi / 180
-    x <- round(x * cos(thetaRad) - y * sin(thetaRad), 0)
-    y <- round(x * sin(thetaRad) + y * cos(thetaRad), 0)
-    return(matrix(c(x, y), nrow = 2, byrow = TRUE))
+r <- function(x, y) {
+    x_pr <- -y
+    y_pr <- x
+    return(list(x = x_pr, y = y_pr))
 }
 
-triRotated2 <- rotater(tri[1, ], tri[2, ], theta = 90)
+ngon_prime2 <- function(x = 2, y = 2, col1 = "#4d4d4d", col2 = "#add8e6") {
+    df.tri1 <- lapply(seq(0, y - 1), function(j) {
+        lapply(seq(0, x - 1), function(i) {
+            tmp1 <- data.frame(
+                x = c(0, 0, 1) + i,
+                y = c(0, 1, 1) + j
+            )
+            list(tmp1)
+        })
+    })
+    df.tri1 <- unlist(df.tri1, recursive = FALSE)
+    df.tri1 <- unlist(df.tri1, recursive = FALSE)
 
-tri
-triRotated
-triRotated2
+    df.tri2 <- lapply(seq(0, y - 1), function(j) {
+        lapply(seq(0, x - 1), function(i) {
+            tmp1 <- data.frame(
+                x = c(0, 1, 1) + i,
+                y = c(0, 0, 1) + j
+            )
+            list(tmp1)
+        })
+    })
+    df.tri2 <- unlist(df.tri2, recursive = FALSE)
+    df.tri2 <- unlist(df.tri2, recursive = FALSE)
 
-# polygon(x = tri[1, ], y = tri[2, ])
-# polygon(x = triRotated2[1, ], y = triRotated2[2, ])
+    col1 <- sample(c(col1, col2), x * y, replace = TRUE)
+    col2 <- sample(c(col1, col2), x * y, replace = TRUE)
+
+    df.ls <- list(df.tri1, df.tri2, col1, col2)
+
+    return(df.ls)
+}
+
+
+for (i in seq_len(2)) {
+    print(r(tri$x, tri$y))
+}
 
 
 
