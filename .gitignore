@@ -37,9 +37,6 @@ rsconnect/
 
 # Vim files
 *.swp
-<<<<<<< Updated upstream
 
 *.Rproj
-=======
 .Rproj.user
->>>>>>> Stashed changes
