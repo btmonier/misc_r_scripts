@@ -34,7 +34,8 @@ plotr_cross <- function(len) {
             labels = FALSE,
             at = seq(-len, len),
             lwd = 0.5,
-            lwd.ticks = 1
+            lwd.ticks = 1,
+            tck = -0.01
         )
     }
 }
@@ -42,7 +43,7 @@ plotr_cross(len = 10)
 
 
 ## Make isoceles trapezoids - proof
-n <- 1
+n <- 5
 coords_1 <- list(
     x = c(-0.5 * n, 1.5 * n, n, 0),
     y = c(-sqrt(3) / 2 * n, -sqrt(3) / 2 * n, 0, 0)
@@ -50,14 +51,35 @@ coords_1 <- list(
 
 
 ## Plot shapes
-rot_seq <- c(0, 120, 240)
-for (i in rot_seq) {
-    rot <- i * (pi / 180)
+# rot_seq <- c(0, 120, 240)
+# for (i in rot_seq) {
+#     rot <- i * (pi / 180)
+#     coords_2 <- list(
+#         x = coords_1$x * cos(rot) - coords_1$y * sin(rot),
+#         y = coords_1$x * sin(rot) + coords_1$y * cos(rot)
+#     )
+#     polygon(x = coords_2$x, y = coords_2$y)
+# }
+
+rot_seq <- seq(0, 240, by = 120)
+pal_seq <- croix::croix_palette(
+    name = "mov_the_revenant"
+)
+pal_seq <- pal_seq[5:7]
+
+for (i in seq_along(rot_seq)) {
+    rot <- rot_seq[i] * (pi / 180)
     coords_2 <- list(
         x = coords_1$x * cos(rot) - coords_1$y * sin(rot),
-        y = coords_1$x * sin(rot) + coords_1$y * cos(rot)
+        y = coords_1$x * sin(rot) + coords_1$y * cos(rot),
+        col = pal_seq[i]
     )
-    polygon(x = coords_2$x, y = coords_2$y)
+    polygon(
+        x = coords_2$x,
+        y = coords_2$y,
+        border = pal_seq[i],
+        col = pal_seq[i]
+    )
 }
 
 
