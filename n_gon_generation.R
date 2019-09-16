@@ -50,9 +50,6 @@ chaosGame <- function(sides = 3,
     if (r > 1 || r < 0) {
         stop("r variable needs to be in range of 0 and 1.")
     }
-    if (iter >= 1e6) {
-        warning("This will take some time...")
-    }
 
     seq_types <- c("random", "restrict")
     if (missing(seq)) {
@@ -94,8 +91,8 @@ chaosGame <- function(sides = 3,
         cho <- sort(sample(seq_len(sides), sample(seq(2, sides), 1)))
         seq <- "restrict"
     }
-    
-    n <- .mod(cumsum(sample(cho, iter - 1, replace = TRUE)), sides)
+
+    n <- .mod(cumsum(sample(cho, iter, replace = TRUE)), sides)
 
     ## Generate points
     tmp <- .ngon(sides)
@@ -110,10 +107,9 @@ chaosGame <- function(sides = 3,
         width = 25,
         char = ":"
     )
-    
+
     x <- y <- 0
-    pltx <- list()
-    plty <- list()
+    pltx <- plty <- list()
 
     for (i in seq_len(iter)) {
         x <- x + (v_x[n[i]] - x) * (1 - r)
@@ -125,8 +121,10 @@ chaosGame <- function(sides = 3,
     }
 
     chaos <- list(
-        x = unlist(pltx),
-        y = unlist(plty),
+        chaos_df = tibble::tibble(
+            x = unlist(pltx),
+            y = unlist(plty)
+        ),
         sides = sides,
         r = r,
         iter = iter,
@@ -141,21 +139,22 @@ chaosGame <- function(sides = 3,
 print.chaosDF <- function(x, ...) {
     cat("A Chaos Game data set:", x$iter, "x 2\n\n")
 
-    if (length(x[[1]]) > 10) {
+    if (length(x[[1]][["x"]]) > 10) {
         tmp <- data.frame(
-            x = x[[1]][1:10],
-            y = x[[2]][1:10]
+            x = x[[1]][["x"]][1:10],
+            y = x[[1]][["y"]][1:10]
         )
         print(tmp)
-        cat("... with", length(x[[1]]) - 10, "more rows\n")
+        cat("... with", length(x[[1]][["x"]]) - 10, "more rows\n")
     } else {
         tmp <- data.frame(
-            x = x[[1]],
-            y = x[[2]]
+            x = x[[1]][["x"]],
+            y = x[[1]][["y"]]
         )
         print(tmp)
     }
-} 
+}
+
 
 summary.chaosDF <- function(x, ...) {
     cat("Chaos game metadata:\n")
@@ -168,12 +167,8 @@ summary.chaosDF <- function(x, ...) {
 
 boxplot.chaosDF <- function(x, ...) {
     par(pty = "s")
-    tmp <- data.frame(
-        x = x[[1]],
-        y = x[[2]]
-    )
     boxplot(
-        tmp,
+        x$chaos_df,
         main = "Chaos Game Data",
         xlab = "Coordinate",
         ylab = "Vertex position",
@@ -200,11 +195,11 @@ plot.chaosDF <- function(x, ...) {
     title(
         main = paste0(x$sides, "-gon Fractal"),
         xlab = paste0(
-            "Sides: ", attr(x, "sides"),
-            "  |  Points: ", attr(x, "iter"),
-            "  |  r: ", attr(x, "r")
+            "Sides: ", x$sides,
+            "  |  Points: ", x$iter,
+            "  |  r: ", x$r
         ),
         ...
     )
-    
+
 }
