@@ -81,15 +81,16 @@ angle <- pi / 2
 
 
 ### Iterate (2)
-angle <- 45
+angle <- -135
 tmp1 <- rotater(0, 1, 0, 0, angle = angle)
-tmp2 <- rotater(0, 2, tmp1[1], tmp1[2], angle = angle)
+tmp2 <- rotater(tmp1[1], tmp1[2] + 1, tmp1[1], tmp1[2], angle = -angle)
+tmp3 <- rotater(tmp2[1], tmp2[2] + 1, tmp2[1], tmp2[2], angle = angle)
 
 
 
 sanity <- tibble::tibble(
-    x = c(0, tmp1[1], tmp1[1]),
-    y = c(0, tmp1[2], tmp1[2])
+    x = c(0, tmp1[1], tmp2[1], tmp3[1]),
+    y = c(0, tmp1[2], tmp2[2], tmp3[2])
 )
 
 sanity %>%
