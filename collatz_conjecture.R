@@ -5,7 +5,7 @@
 # Description:   Collatz conjecture formula
 # Author:        Brandon Monier
 # Created:       2019-10-28 at 17:18:44
-# Last Modified: 2019-10-29 at 12:56:39
+# Last Modified: 2019-10-30 at 18:06:15
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -22,7 +22,9 @@ library(ggplot2)
 library(magrittr)
 
 
-## Make function ----
+## Make functions ----
+
+### Collatz conjecture
 collatz <- function(n) {
     if (n %% 2 == 0) {
         n / 2
@@ -31,8 +33,7 @@ collatz <- function(n) {
     }
 }
 
-
-## Create vector of Collatz sequence ----
+### Generate Collatz sequence
 collatzSequence <- function(n) {
     c_vect <- n
 
@@ -43,72 +44,80 @@ collatzSequence <- function(n) {
     return(c_vect)
 }
 
+### Coordinate rotation function
+rotater <- function(px, py, cx = 0, cy = 0, angle) {
 
-n <- 1000
-tmp_ls <- vector("list", length = n)
-for (i in seq_len(n)) {
-    tmp <- collatzSequence(i)
-    tmp_ls[[i]]$seq <- tmp
-    tmp_ls[[i]]$steps <- length(tmp)
+    angle <- angle * pi / 180
+
+    s <- sin(angle)
+    c <- cos(angle)
+
+    x_rot <- c * (px - cx) - s * (py - cy) + cx
+    y_rot <- s * (px - cx) - c * (py - cy) + cy
+
+    return(cbind(x = x_rot, y = y_rot))
 }
 
-tmp_ls[[100]]$seq %>%
-    tibble::as_tibble() %>%
-    ggplot() +
-    aes(x = seq_along(value), y = value) +
-    geom_line(stat = "identity") +
-    labs(
-        x = "Index",
-        y = "Collatz value"
-    ) +
-    theme(
-        axis.title = element_text(face = "bold")
-    )
 
 
-rotater <- function(x, y, theta) {
-    theta <- (theta * pi / 180)
-    return(
-        list(
-            x = ( x * cos(theta)) + (y * sin(theta)),
-            y = (-x * sin(theta)) + (y * cos(theta))
+# === Unit tests ====================================================
+
+## Parameters ----
+n     <- 1e4
+theta <- -100
+
+
+## Iterate ----
+tmp_coll <- vector(mode = "list", length = n)
+for (j in seq_len(n)) {
+    samp  <- collatzSequence(j)
+    tmp_ls <- list(x = 0, y = 0)
+    for (i in seq_along(samp)) {
+        if (samp[i] %% 2 == 0) {
+            theta2 <- theta
+        } else {
+            theta2 <- -theta
+        }
+
+        last_x <- tail(x = tmp_ls$x, n = 1)
+        last_y <- tail(x = tmp_ls$y, n = 1)
+
+        tmp_rot <- rotater(
+            px = last_x,
+            py = last_y + 1,
+            cx = last_x + 1,
+            cy = last_y,
+            angle = theta2
         )
-    )
-}
 
-x <- 0
-y <- 0
-n <- collatzSequence(n = 5)
-incr <- 1
-angle <- 60
-
-tmp_ls <- list(x = x, y = y)
-for(i in seq_along(n)) {
-    if (n[i] %% 2 == 0) {
-        angle <- angle
-    } else {
-        angle <- -angle
+        tmp_ls$x[i + 1] <- tmp_rot[1]
+        tmp_ls$y[i + 1] <- tmp_rot[2]
     }
-    rot <- rotater(
-        x = 0,
-        y = i,
-        theta = angle
-    )
-    tmp_ls$x[i + 1] <- rot$x
-    tmp_ls$y[i + 1] <- rot$y + i
+    tmp_ls <- do.call("rbind", tmp_ls) %>%
+        t() %>%
+        tibble::as_tibble()
+    tmp_coll[[j]] <- tmp_ls
 }
+tmp_coll <- do.call("rbind", tmp_coll)
 
-max_all <- max(c(max(tmp_ls$x %>% abs()), max(tmp_ls$y %>% abs())))
-tmp_ls %>%
-    tibble::as_tibble() %>%
+
+## Visualize ----
+tmp <- tmp_coll %>%
     ggplot() +
     aes(x, y) +
-    geom_path() +
-    geom_point() +
-    xlim(c(-max_all, max_all)) +
-    ylim(c(-max_all, max_all)) +
-    coord_equal()
+    geom_point(color = "black", shape = 46, alpha = 0.05) +
+    theme_void() +
+    theme(panel.background = element_rect(fill = "white"))
 
 
-
+## Write to disk ----
+ggsave(
+    plot = last_plot(),
+    filename = paste0("collatz_test_", Sys.Date(), ".png"),
+    device = "png",
+    width = 10,
+    height = 10,
+    units = "in",
+    dpi = 500
+)
 
