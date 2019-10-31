@@ -63,7 +63,7 @@ rotater <- function(px, py, cx = 0, cy = 0, angle) {
 # === Unit tests ====================================================
 
 ## Parameters ----
-n     <- 1e4
+n     <- 100
 theta <- -100
 
 
@@ -84,7 +84,7 @@ for (j in seq_len(n)) {
 
         tmp_rot <- rotater(
             px = last_x,
-            py = last_y + 1,
+            py = last_y + 60,
             cx = last_x + 1,
             cy = last_y,
             angle = theta2
@@ -105,7 +105,8 @@ tmp_coll <- do.call("rbind", tmp_coll)
 tmp <- tmp_coll %>%
     ggplot() +
     aes(x, y) +
-    geom_point(color = "black", shape = 46, alpha = 0.05) +
+    geom_point(color = "black", alpha = 0.25) +
+    coord_equal() +
     theme_void() +
     theme(panel.background = element_rect(fill = "white"))
 
