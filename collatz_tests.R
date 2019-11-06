@@ -220,7 +220,7 @@ tmp_ls %>%
 # === Unit test 04 ==================================================
 
 ## Parameters ----
-n    <- 2000
+n    <- 5000
 step <- 1
 even_turn <- 5
 odd_turn  <- -10
@@ -277,10 +277,15 @@ min <- -max
 tmp_coll %>%
     ggplot() +
     aes(x = x, y = y, fill = iter) +
-    geom_path(aes(alpha = 0.01), size = 0.5) +
-    xlim(min, max) +
-    ylim(min, max) +
-    coord_fixed() +
-    theme(legend.position = "none")
+    geom_path(aes(alpha = 0.01), size = 0.3, color = "white") +
+    # xlim(min, max) +
+    # ylim(min, max) +
+    # coord_fixed() +
+    theme_void() +
+    theme(
+        legend.position = "none",
+        panel.background = element_rect(fill = "#2e2e2e")
+
+    )
 
 
