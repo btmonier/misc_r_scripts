@@ -75,8 +75,5 @@ compare_runtimes <- function()
     print(vector_time)
 }
 
-tmp <- mandelbrot_vectorized()
-mandel_df <- tibble::tibble(
-    x = tmp$x,
-    y = tmp$y
-)
+tmp <- mandelbrot_vectorized(showplot = FALSE, nx = 1e3, ny = 750)
+tmp$k %>% NostalgiR::nos.image()
