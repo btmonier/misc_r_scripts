@@ -1,7 +1,6 @@
 # === CW 001 ========================================================
 
-library(testthat)
-
+## My attempt ----
 duplicate_count <- function(text) {
     text <- tolower(text)
     text <- strsplit(text, "")
@@ -10,12 +9,6 @@ duplicate_count <- function(text) {
     text <- text[text >= 2]
     return(length(text))
 }
-
-testthat::test_that("Sample Tests", {
-    expect_equal(duplicate_count(""), 1)
-    expect_equal(duplicate_count("abcdeaa"), 1)
-    expect_equal(duplicate_count("Indivisibilities"), 2)
-}) %>% print()
 
 
 
@@ -51,18 +44,50 @@ bouncingBall <- function(h, bounce, window) {
 
 # === CW 003 ========================================================
 
-dig_power <- function(n, p) {
-    if (n < 0 || p < 0) return(-1)
+## My attempt ----
+group_by_commas <- function(n) {
     
-    num_string <- as.numeric(strsplit(as.character(n), "")[[1]])
+    ## Logic
+    if (n < 0 || n >= 2147483647) return(-1)
+    if (n < 1000) return(as.character(n))
     
-    powers <- seq_len(num_string) + (p - 1)
+    ## Reverse string and split with , every 3 elements
+    n <- as.integer(n)
+    n <- paste0(rev(strsplit(as.character(n), "")[[1]]), collapse = "")
+    n <- gsub("(.{3})", "\\1,", n)
+    n <- paste0(rev(strsplit(as.character(n), "")[[1]]), collapse = "")
+    n <- gsub("^,", "", n)
     
-    form_iter <- num_string ^ powers
-    
-    sum_iter <- sum(form_iter)
-    return(num_string)
+    ## Return reversed
+    return(n)
 }
+
+
+## Best attempt ----
+group_by_commas <- function(n){
+    format(n, big.mark=',', scientific=F)
+}
+
+
+
+# === CW 004 ========================================================
+
+## My attempt ----
+get_count <- function(input_str) {
+    vowels <- c("a", "e", "i", "o", "u")
+    input_str <- strsplit(input_str, "")[[1]]
+    length(input_str[input_str %in% vowels])
+}
+
+
+## Best attempt ----
+get_count <- function(input_str){
+    nchar(gsub("[^aeiou]", "", input_str))
+}
+
+
+
+
 
 
 
