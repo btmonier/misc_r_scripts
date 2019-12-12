@@ -11,8 +11,16 @@ duplicate_count <- function(text) {
 }
 
 
+## Best attempt ----
+duplicate_count <- function(text){
+    sum(table(strsplit(tolower(text), "")) > 1)
+}
+
+
 
 # === CW 002 ========================================================
+
+## My attempt ----
 bouncingBall <- function(h, bounce, window) {
     
     ## Logic
@@ -40,6 +48,12 @@ bouncingBall <- function(h, bounce, window) {
     return(fall_data + bounce_data)
 }
 
+
+## Best attempt ----
+bouncingBall <- function(h, bounce, window) {
+    if ((h <= 0.0) || (window >= h) || (bounce <= 0.0) || (bounce >= 1.0)) -1
+    else 2 + bouncingBall(h * bounce, bounce, window)
+}
 
 
 # === CW 003 ========================================================
