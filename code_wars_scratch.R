@@ -101,6 +101,22 @@ get_count <- function(input_str){
 
 
 
+# === CW 005 ========================================================
+
+## My attempt ----
+movie <- function(card, ticket, perc) {
+    
+}
+
+
+## Best attempt ----
+
+
+
+
+
+
+
 
 
 
