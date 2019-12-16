@@ -105,7 +105,17 @@ get_count <- function(input_str){
 
 ## My attempt ----
 movie <- function(card, ticket, perc) {
-    
+    sys_a <- ticket
+    sys_b <- card + ticket
+    new_t <- ticket
+    data <- 0
+    while (sys_b >= sys_a) {
+        sys_a <- sys_a + ticket
+        new_t <- new_t * perc
+        sys_b <- ceiling(sys_b + new_t)
+        data <- data + 1
+    }
+    return(data - 1)
 }
 
 
