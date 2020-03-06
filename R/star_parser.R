@@ -5,7 +5,7 @@
 # Description:   Parse STAR alignment statistics files
 # Author:        Brandon Monier
 # Created:       2020-03-06 at 13:39:29
-# Last Modified: 2020-03-06 at 14:58:39
+# Last Modified: 2020-03-06 at 17:29:55
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -18,31 +18,43 @@
 # === Preamble ======================================================
 
 ## Load packages ----
+library(ggplot2)
 library(magrittr)
 library(tibble)
 
 
 ## Load data ----
-con <- file("data/star_statistics")
-stats <- readLines(con = con)
-stats_ls <- list(stats)
+
+### Get files
+files <- list.files(
+    path       = "data/star_stats",
+    recursive  = TRUE,
+    pattern    = "\\.out$",
+    full.names = TRUE
+)
+
+### Read text from each file
+stats_ls <- lapply(X = seq_len(length(files)), FUN = function(i) {
+    readLines(con = files[i])
+})
+
 
 
 # === Data parsing ==================================================
 
 ## Parse names ----
-# pure_names <- gsub(pattern = "^output/", replacement = "", x = files)
-# pure_names <- gsub(pattern = "_CKD.*$", replacement = "", x = pure_names)
-pure_names <- c("test_sample")
+pure_names <- gsub(pattern = "^data/star_stats/", replacement = "", x = files)
+pure_names <- gsub(pattern = "_CKD.*$", replacement = "", x = pure_names)
+names(stats_ls) <- pure_names
 
 
 ## Set up variables ----
-map_speed_ls       <- vector(mode = "list", length = length(stats_ls))
-uniquely_mapped_ls <- vector(mode = "list", length = length(stats_ls))
-mapped_multiple_ls <- vector(mode = "list", length = length(stats_ls))
-mapped_too_many_ls <- vector(mode = "list", length = length(stats_ls))
-unmapped_short_ls  <- vector(mode = "list", length = length(stats_ls))
-unmapped_other_ls  <- vector(mode = "list", length = length(stats_ls))
+map_speed_ls       <- vector(mode = "numeric", length = length(stats_ls))
+uniquely_mapped_ls <- vector(mode = "numeric", length = length(stats_ls))
+mapped_multiple_ls <- vector(mode = "numeric", length = length(stats_ls))
+mapped_too_many_ls <- vector(mode = "numeric", length = length(stats_ls))
+unmapped_short_ls  <- vector(mode = "numeric", length = length(stats_ls))
+unmapped_other_ls  <- vector(mode = "numeric", length = length(stats_ls))
 
 
 ## Loop ----
@@ -89,29 +101,17 @@ for (i in seq_len(length(stats_ls))) {
 
 
     # Populate
-    map_speed_ls[[i]]       <- tmp_map_speed
-    uniquely_mapped_ls[[i]] <- tmp_uniq
-    mapped_multiple_ls[[i]] <- tmp_map_mult
-    mapped_too_many_ls[[i]] <- tmp_map_too
-    unmapped_short_ls[[i]]  <- tmp_unmap_short
-    unmapped_other_ls[[i]]  <- tmp_unmap_other
+    map_speed_ls[i]       <- tmp_map_speed
+    uniquely_mapped_ls[i] <- tmp_uniq
+    mapped_multiple_ls[i] <- tmp_map_mult
+    mapped_too_many_ls[i] <- tmp_map_too
+    unmapped_short_ls[i]  <- tmp_unmap_short
+    unmapped_other_ls[i]  <- tmp_unmap_other
 }
 
 
-## Coerce to vector ----
-map_speed_ls       <- do.call(what = "rbind", map_speed_ls)
-uniquely_mapped_ls <- do.call(what = "rbind", uniquely_mapped_ls)
-mapped_multiple_ls <- do.call(what = "rbind", mapped_multiple_ls)
-mapped_too_many_ls <- do.call(what = "rbind", mapped_too_many_ls)
-unmapped_short_ls  <- do.call(what = "rbind", unmapped_short_ls)
-unmapped_other_ls  <- do.call(what = "rbind", unmapped_other_ls)
-
-
-
-# === Finalize ======================================================
-
 ## Pass vectors to data frame ----
-star_stats <- tibble::tibble(
+star_data <- tibble::tibble(
     sample          = pure_names,
     map_speed       = map_speed_ls,
     uniquely_mapped = uniquely_mapped_ls,
@@ -123,6 +123,68 @@ star_stats <- tibble::tibble(
 
 
 
+# === Visualize =====================================================
+
+## Convert data to long format ----
+long_star <- star_data %>%
+    tidyr::gather(key = "map_type", value = "value", 3:7)
+
+
+## Reorder factor levels ----
+long_star$map_type <- factor(
+    x = long_star$map_type,
+    levels = c(
+        "uniquely_mapped",
+        "mapped_multiple",
+        "mapped_too_many",
+        "unmapped_short",
+        "unmapped_other"
+    )
+)
+
+long_star %>%
+    ggplot() +
+    aes(x = sample, y = value, fill = map_type) +
+    geom_col(position = position_stack(reverse = TRUE)) +
+    coord_flip() +
+    scale_fill_manual(
+        values = c("#4579A6", "#77B4EE", "#E1AB76", "#BA0948", "#780505"),
+        name = "",
+        breaks = c(
+            "uniquely_mapped",
+            "mapped_multiple",
+            "mapped_too_many",
+            "unmapped_short",
+            "unmapped_other"
+        ),
+        labels = c(
+            "Uniquely mapped",
+            "Mapped to multiple loci",
+            "Mapped to too many loci",
+            "Unmapped: too short",
+            "Unmapped: other"
+        )
+    ) +
+    ylab("Number of reads") +
+    ggtitle("STAR alignment scores") +
+    expand_limits( x = c(0,NA), y = c(0,NA)) +
+    scale_y_continuous(labels = function(l) {
+        paste0(round(l / 1e6, 1), "M")
+    }) +
+    theme_minimal() +
+    theme(legend.position = "bottom", axis.title.y = element_blank())
+
+
+# star_maps %>%
+#     ggplot() +
+#     aes(y = map_percent) +
+#     geom_boxplot() +
+#     ylab("% Uniquely mapped reads") +
+#     theme(
+#         axis.title.x = element_blank(),
+#         axis.text.x = element_blank(),
+#         axis.ticks.x = element_blank()
+#     )
 
 
 
