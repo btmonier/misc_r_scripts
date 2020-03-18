@@ -23,11 +23,16 @@ library(magrittr)
 library(tibble)
 
 
+## Parameters ----
+path <- "~/Temporary/sorghum_rna_stats/star_stats"
+pattern <- "/home/btmonier/Temporary/sorghum_rna_stats/star_stats/"
+
+
 ## Load data ----
 
 ### Get files
 files <- list.files(
-    path       = "data/star_stats",
+    path = path,
     recursive  = TRUE,
     pattern    = "\\.out$",
     full.names = TRUE
@@ -43,7 +48,12 @@ stats_ls <- lapply(X = seq_len(length(files)), FUN = function(i) {
 # === Data parsing ==================================================
 
 ## Parse names ----
-pure_names <- gsub(pattern = "^data/star_stats/", replacement = "", x = files)
+pure_names <- gsub(
+    pattern = pattern,
+    replacement = "",
+    x = files
+)
+# pure_names <- gsub(pattern = "^data/star_stats/", replacement = "", x = files)
 pure_names <- gsub(pattern = "_CKD.*$", replacement = "", x = pure_names)
 names(stats_ls) <- pure_names
 
@@ -59,6 +69,8 @@ unmapped_other_ls  <- vector(mode = "numeric", length = length(stats_ls))
 
 ## Loop ----
 for (i in seq_len(length(stats_ls))) {
+    
+    message("Parsing sample: ", pure_names[i])
 
     # Subset for each taxa
     tmp <- stats_ls[[i]]
