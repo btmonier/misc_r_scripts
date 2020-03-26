@@ -1,4 +1,6 @@
 # Saturation curve test
+# Last Modified: 2020-03-24 at 13:27:33
+#--------------------------------------------------------------------
 
 
 ## Set WD ----
@@ -47,8 +49,8 @@ colnames(count_all)[-1] <- pure_names
 count_mat <- count_all[, -1] %>% as.matrix()
 
 write.csv(
-    x = count_all, 
-    file = "data/sorghum_htseq_counts_all.csv", 
+    x = count_all,
+    file = "data/sorghum_htseq_counts_all.csv",
     row.names = FALSE
 )
 
@@ -83,34 +85,23 @@ sat_picks <- c(
 )
 sat_pattern <- paste0(sat_picks, sep = "|", collapse = "")
 sat_pattern <- gsub("\\|$", "", sat_pattern)
-# sample_intensity <- c(
-#     rep(sat_picks[1],  ndepth + 1),
-#     rep(sat_picks[2],  ndepth + 1),
-#     rep(sat_picks[3],  ndepth + 1),
-#     rep(sat_picks[4],  ndepth + 1),
-#     rep(sat_picks[5],  ndepth + 1),
-#     rep(sat_picks[6],  ndepth + 1),
-#     rep(sat_picks[7],  ndepth + 1),
-#     rep(sat_picks[8],  ndepth + 1),
-#     rep(sat_picks[9],  ndepth + 1),
-#     rep(sat_picks[10], ndepth + 1)
-# )
-sat_filt <- sat %>% 
+
+sat_filt <- sat %>%
     dplyr::filter(stringr::str_detect(sample, sat_pattern))
 # sat_filt$s_int <- sample_intensity
 sat_filt$sample <- factor(
-    sat_filt$sample, 
+    sat_filt$sample,
     levels = sat_picks
 )
 colfunc <- colorRampPalette(c("#DCEDC8", "#1A237E"))
 
-satplot <- sat_filt %>% 
+satplot <- sat_filt %>%
     ggplot() +
     aes(x = depth, y = sat, color = sample) +
     labs(x = "Reads", y = "Genes above threshold") +
     geom_line(size = 1.2, alpha = 0.9) +
     scale_color_manual(
-        values = colfunc(length(sat_picks)), 
+        values = colfunc(length(sat_picks)),
         breaks = sat_picks,
         labels = c(
             "~ 1M", "~ 2M", "~ 3M", "~4M", "~5M",
@@ -127,7 +118,7 @@ satplot <- sat_filt %>%
 satplot
 
 ggsave(
-    filename = "C:/Users/brand/Documents/tmp/sorghum_rna_statistics/saturation.png", 
+    filename = "C:/Users/brand/Documents/tmp/sorghum_rna_statistics/saturation.png",
     plot = satplot,device = "png",width = 8, height = 5, dpi = "retina"
 )
 
