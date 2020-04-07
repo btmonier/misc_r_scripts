@@ -21,5 +21,6 @@ renamer <- function(df, n_last, vec2){
         )
 }
 
+
 ## Test ----
 test %>% renamer(3, c("stuff", "to", "try"))
