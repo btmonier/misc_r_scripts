@@ -27,7 +27,7 @@ cppFunction(
 
 
 ## Set parameters
-points <- 10e4
+points <- 20e6
 a <- -1.5
 b <- 1.5
 c <- 1.5
