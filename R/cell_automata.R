@@ -67,8 +67,30 @@ ls_rules <- list(
     )
 )
 
+ls_pattern <- matrix(
+    data = c(
+        1, 1, 1,
+        1, 1, 0,
+        1, 0, 1,
+        1, 0, 0,
+        0, 1, 1,
+        0, 1, 0,
+        0, 0, 1,
+        0, 0, 0
+    ),
+    ncol = 3, byrow = TRUE
+)
+
 
 ## Functions ----
+
+### Convert integer number to bit
+intToBitVect <- function(x, l = 8, p = 0){
+    tmp <- rev(as.integer(intToBits(x)))
+    id <- seq_len(match(1, tmp, length(tmp)) - 1)
+    pad <- rep(p, l - length(tmp[-id]))
+    return(c(pad, tmp[-id]))
+}
 
 ### Generate k-mer subsets of given vector
 makeKmers <- function(x) {
