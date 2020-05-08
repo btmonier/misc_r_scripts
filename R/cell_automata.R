@@ -23,50 +23,6 @@ library(reshape2)
 
 
 ## Data ----
-
-### Rule book
-ls_rules <- list(
-    "rule_30" = matrix(
-        data = c(
-            1, 1, 1, 0,
-            1, 1, 0, 0,
-            1, 0, 1, 0,
-            1, 0, 0, 1,
-            0, 1, 1, 1,
-            0, 1, 0, 1,
-            0, 0, 1, 1,
-            0, 0, 0, 0
-        ),
-        ncol = 4, byrow = TRUE
-    ),
-    "rule_90" = matrix(
-        data = c(
-            1, 1, 1, 0,
-            1, 1, 0, 1,
-            1, 0, 1, 0,
-            1, 0, 0, 1,
-            0, 1, 1, 1,
-            0, 1, 0, 0,
-            0, 0, 1, 1,
-            0, 0, 0, 0
-        ),
-        ncol = 4, byrow = TRUE
-    ),
-    "rule_110" = matrix(
-        data = c(
-            1, 1, 1, 0,
-            1, 1, 0, 1,
-            1, 0, 1, 1,
-            1, 0, 0, 0,
-            0, 1, 1, 1,
-            0, 1, 0, 1,
-            0, 0, 1, 1,
-            0, 0, 0, 0
-        ),
-        ncol = 4, byrow = TRUE
-    )
-)
-
 ls_pattern <- matrix(
     data = c(
         1, 1, 1,
@@ -115,7 +71,8 @@ makeKmers <- function(x) {
 }
 
 ### Create new generation ----
-evolver <- function(kmers, rule) {
+evolver <- function(kmers, rule, ls_pattern = ls_pattern) {
+
     kmers %>%
         sapply(function(i) {
             rule[, 1:3] %>%
@@ -127,16 +84,17 @@ evolver <- function(kmers, rule) {
 }
 
 ### Wrapper ----
-automata <- function(gen, n_ind, rule, pattern = NULL) {
+automata <- function(gen, rule, pattern = NULL, n_ind = 31) {
+
+    if (rule > 255) stop("Rule ID cannot exceed 255")
 
     ## Initial pattern
     if (is.null(pattern))  {
-        pattern_0 <- sample(c(0, 1), size = n_ind, replace = TRUE)
+        pattern_0 <- c(rep(0, (n_ind - 1) * 0.5 ), 1, rep(0, (n_ind - 1) * 0.5))
     } else {
         pattern_0 <- pattern
-        n_ind <- length(pattern_0)
     }
-
+    rule <- cbind(ls_pattern, intToBitVect(rule))
     all_generations <- vector("list", gen)
     i <- 1
     repeat {
@@ -146,7 +104,7 @@ automata <- function(gen, n_ind, rule, pattern = NULL) {
             break()
         } else {
             all_generations[[i]] <- all_generations[[i - 1]] %>%
-                makeKmers(n_ind) %>%
+                makeKmers() %>%
                 evolver(rule)
         }
         i <- i + 1
@@ -163,14 +121,11 @@ automata <- function(gen, n_ind, rule, pattern = NULL) {
 ## Test ----
 
 ### Generate
-rule <- ls_rules$rule_110
-
-pattern <- c(rep(0, 30), 1, rep(0, 30))
+rule <- sample(0:255, 1)
 auto_res <- automata(
-    gen = 150,
+    gen = 110,
     rule = rule,
-    n_ind = 30,
-    pattern = pattern
+    n_ind = 71
 )
 
 ### Visualize
@@ -181,12 +136,18 @@ auto_res %>%
     geom_tile() +
     scale_y_reverse() +
     coord_equal() +
+    labs(
+        title = paste("Rule:", rule)
+    ) +
     theme(
-        axis.title = element_blank(),
         axis.text = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none",
-        panel.background = element_blank()
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        title = element_text(face = "bold", color = "#424242")
     )
 
 
