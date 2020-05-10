@@ -5,7 +5,7 @@
 # Description:   Cellular automata
 # Author:        Brandon Monier
 # Created:       2020-05-05 at 21:01:29
-# Last Modified: 2020-05-05 at 23:57:15
+# Last Modified: 2020-05-09 at 23:59:07
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -19,6 +19,7 @@
 ## Load packages ----
 library(ggplot2)
 library(magrittr)
+library(progress)
 library(reshape2)
 
 
@@ -117,7 +118,6 @@ automata <- function(gen, rule, pattern = NULL, n_ind = 31) {
 }
 
 
-
 ## Test ----
 
 ### Generate
@@ -125,7 +125,7 @@ rule <- sample(0:255, 1)
 auto_res <- automata(
     gen = 110,
     rule = rule,
-    n_ind = 71
+    n_ind = 121
 )
 
 ### Visualize
@@ -149,5 +149,62 @@ auto_res %>%
         panel.background = element_blank(),
         title = element_text(face = "bold", color = "#424242")
     )
+
+
+
+# ## Iterate ----
+# rules <- 0:255
+# pb <- progress_bar$new(
+#     format = "  Generating rules [:bar] :percent eta: :eta",
+#     total = length(rules),
+#     clear = FALSE,
+#     width= 60
+# )
+# for (i in rules) {
+#
+#     pb$tick()
+#
+#     auto_res <- automata(
+#         gen = 110,
+#         rule = i,
+#         n_ind = 121
+#     )
+#
+#     ### Visualize
+#     auto_res %>%
+#         reshape2::melt() %>%
+#         ggplot() +
+#         aes(x = Var2, y = Var1, fill = value) +
+#         geom_tile() +
+#         scale_y_reverse() +
+#         coord_equal() +
+#         labs(
+#             title = paste("Rule:", i)
+#         ) +
+#         theme(
+#             axis.text = element_blank(),
+#             axis.title.x = element_blank(),
+#             axis.title.y = element_blank(),
+#             axis.ticks = element_blank(),
+#             legend.position = "none",
+#             plot.title = element_text(hjust = 0.5),
+#             panel.background = element_blank(),
+#             title = element_text(face = "bold", color = "#424242")
+#         )
+#
+#     ggsave(
+#         filename = paste0("../../tmp/fig_output/rule_", i, ".png"),
+#         width = 5,
+#         height = 5,
+#         units = "in"
+#     )
+# }
+
+
+
+
+
+
+
 
 
