@@ -73,7 +73,7 @@ for (i in seq(0, iter)) {
     cat("Processing file:", sprintf(paste0("%0", nchar(iter), "d"), i), "\n")
     png(
         filename = paste0(
-            "perl_",
+            "../../tmp/fig_output/perl_",
             sprintf(paste0("%0", nchar(iter), "d"), i),
             ".png"
         ), res = 150, height = 4, width = 4, units = "in"
@@ -98,8 +98,14 @@ for (i in seq(0, iter)) {
 
 
 ## Make gif
-list.files(pattern = "*.png", full.names = T) %>%
+list.files(
+    path = "../../tmp/fig_output/perlin_output/",
+    pattern = "*.png",
+    full.names = TRUE
+) %>%
     map(image_read) %>% # reads each path file
     image_join() %>% # joins image
     image_animate(fps = 25) %>% # animates, can opt for number of loops
     image_write("perlin_noise.gif") # write to current dir
+
+
