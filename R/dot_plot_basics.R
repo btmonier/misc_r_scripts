@@ -31,8 +31,16 @@ library(reshape2)
 ## Functions ----
 
 ### Create random string of sequence
-makeDNA <- function(l = 20, alphabet = c("A", "C", "G", "T")) {
-    return(sample(alphabet, l, replace = TRUE))
+makeDNA <- function(l = 20,
+                    alphabet = c("A", "C", "G", "T"),
+                    collapse = FALSE) {
+
+    bio_str <- sample(alphabet, l, replace = TRUE)
+
+    if (collapse) bio_str <- paste(bio_str, collapse = "")
+
+    return(bio_str)
+
 }
 
 ### Create dot plot matrix
