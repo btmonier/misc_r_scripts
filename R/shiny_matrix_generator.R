@@ -12,7 +12,7 @@
 # Detailed Purpose:
 #    The main purpose of this Rscript is to create a binary matrix
 #    (i.e. a matrix of 1s and 0s) using interactive command with the
-#    Shiny platform
+#    Shiny platform.
 #--------------------------------------------------------------------
 
 # === Preamble ======================================================
@@ -21,6 +21,7 @@
 library(ggplot2)
 library(magrittr)
 library(shiny)
+library(stringr)
 
 
 
