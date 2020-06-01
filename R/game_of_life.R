@@ -5,7 +5,7 @@
 # Description:   Conway's "Game of Life"
 # Author:        Brandon Monier
 # Created:       2020-05-09 at 22:25:55
-# Last Modified: 2020-05-10 at 03:22:35
+# Last Modified: 2020-05-31 at 17:41:41
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -110,35 +110,20 @@ conway <- function(area) {
 
 # === The Game of Life... ===========================================
 
-## Random sample data ----
+## Parameters ----
+gen        <- 500 # number of generations
+fig_output <- "../../tmp/fig_output/game_of_life/chaos_big.gif"
+fig_title  <- "Chaos - 100 x 100"
+fig_width  <- 800
+fig_height <- 800
 
-### Parameters
-gen   <- 500       # number of generations
-n_row <- 80        # number of rows in game area
-n_col <- 80        # number of columns in game area
-p_off <- 0.55      # probability weight for "off" states
-p_on  <- 1 - p_off # probability weight for "on" state
 
-### Initial seed area
-area <- matrix(
-    data = 0,
-    nrow = n_row,
-    ncol = n_col
-)
+## Initial matrix ----
+source("data/game_of_life_dictionary.R")
+area_test <- ls_gol[["chaos_big"]]
 
-### Create test area
-area_test <- matrix(
-    data = sample(
-        x = c(0, 1),
-        size = nrow(area) * ncol(area),
-        replace = TRUE,
-        prob = c(p_off, p_on)
-    ),
-    nrow = nrow(area),
-    ncol = ncol(area)
-)
 
-### Create generations
+## Create generations ----
 message("--- --- ---")
 logging::loginfo("Program start")
 ls_conway_gen <- vector("list", gen)
@@ -160,7 +145,7 @@ for (i in seq_len(gen)) {
 
 ## Visualize ----
 message(" - Creating visualization...")
-plt_conway <- ls_conway_gen %>%
+anim_conway <- ls_conway_gen %>%
     reshape2::melt() %>%
     ggplot() +
     aes(x = Var2, y = Var1, fill = value) +
@@ -179,23 +164,50 @@ plt_conway <- ls_conway_gen %>%
     ) +
     gganimate::transition_states(L1) +
     labs(
-        title = "John Conway's Game of Life",
+        title = fig_title,
         caption = "generation: {closest_state}"
     )
 
 
-## Write to disk ----
+## Create gif and save to disk ----
 message(" - Writing to disk...")
-plt_conway %>%
-    gganimate::anim_save(
-        filename = "../../tmp/fig_output/game_of_life_test_4.gif",
-        nframes = 2 * gen
-    )
-logging::loginfo("Program end")
+nframes <- gen * 2
+gganimate::animate(
+    plot = anim_conway,
+    nframes = nframes,
+    fps = 30,
+    width = fig_width,
+    height = fig_height,
+    renderer = gganimate::gifski_renderer(fig_output)
+)
 
 
+## Old test data ----
+# ### Initial seed area
+# area <- matrix(
+#     data = 0,
+#     nrow = n_row,
+#     ncol = n_col
+# )
+
+# ### Create test area
+# area_test <- matrix(
+#     data = sample(
+#         x = c(0, 1),
+#         size = nrow(area) * ncol(area),
+#         replace = TRUE,
+#         prob = c(p_off, p_on)
+#     ),
+#     nrow = nrow(area),
+#     ncol = ncol(area)
+# )
 
 
+## Old parameters ----
+# n_row      <- 79        # number of rows in game area
+# n_col      <- 80        # number of columns in game area
+# p_off      <- 0.55      # probability weight for "off" states
+# p_on       <- 1 - p_off # probability weight for "on" state
 
 
 
