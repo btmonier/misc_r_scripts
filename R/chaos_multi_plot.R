@@ -32,7 +32,7 @@ source("R/n_gon_generation.R")
 chaos_points <- 1e5
 img_path     <- "../../tmp/fig_output/chaos_game/"
 file_pre     <- "chaos_game_gen_"
-total_plots  <- 10
+total_plots  <- 100
 
 
 
