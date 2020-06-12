@@ -38,7 +38,7 @@ total_plots  <- 100
 
 # === Create random images ==========================================
 
-for (i in seq_len(total_plots)) {
+for (i in seq(101, 100 + total_plots)) {
     logging::loginfo(paste0("Creating image for iteration: ", i))
 
     tmp <- chaosGame(chaos = TRUE, iter = chaos_points)
