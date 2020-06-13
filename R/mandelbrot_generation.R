@@ -5,7 +5,7 @@
 # Description:   Visualize the Mandelbrot Set
 # Author:        Brandon Monier
 # Created:       2020-06-13 at 12:59:58
-# Last Modified: 2020-06-13 at 14:23:35
+# Last Modified: 2020-06-13 at 18:05:59
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -25,6 +25,8 @@
 
 ## Load packages ----
 library(ggplot2)
+library(glue)
+library(logging)
 library(magrittr)
 
 
@@ -46,12 +48,17 @@ mandelbrot <- function(c) {
 
 ## Parameters ----
 
-### Figure path
-fig_path <- "../../tmp/fig_output/"
+### Booleans
+save_to_disk <- TRUE
+static_image <- FALSE
 
-### Matrix size
-width  <- 5e3
+### Matrix size (e.g. iterations)
+width  <- 105
 height <- floor(width * 0.67)
+
+### Figure path
+fig_path  <- "../../tmp/fig_output/"
+file_name <- glue::glue("mandelbrot_set_{width}.png")
 
 ### Plot window
 re_start <- -2
@@ -60,11 +67,13 @@ im_start <- -1
 im_end   <- 1
 
 ### Maximum iterations for Mandelbrot calculation
-max_iter <- 100
+max_iter <- 50
 
 
 
 # === Create Mandelbrot matrix data set =============================
+
+logging::loginfo("Generating Mandelbrot data...")
 
 ## Initialize data set ----
 c_mat <- matrix(0, nrow = height, ncol = width)
@@ -75,11 +84,10 @@ for (i in seq(0, height)) {
     for (j in seq(0, width)) {
         c <- complex(
             length.out = 1,
-            real = re_start + (j / width) * (re_end - re_start),
-            imaginary = im_start + (i / height) * (im_end - im_start)
+            real       = re_start + (j / width) * (re_end - re_start),
+            imaginary  = im_start + (i / height) * (im_end - im_start)
         )
         m <- mandelbrot(c)
-
         c_mat[i, j] <- m
     }
 }
@@ -87,6 +95,8 @@ for (i in seq(0, height)) {
 
 
 # === Visualize =====================================================
+
+logging::loginfo("Generating visualization...")
 
 ## Create ggplot object ----
 plt_mandelbrot <- c_mat %>%
@@ -96,34 +106,28 @@ plt_mandelbrot <- c_mat %>%
     geom_tile() +
     scale_y_reverse() +
     coord_equal() +
-    theme(
-        axis.text = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.ticks = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        title = element_text(face = "bold", color = "#424242")
-    )
+    theme_void() +
+    theme(legend.position = "none")
+
 
 
 ## Save to disk ----
-ggsave(
-    filename = "mandelbrot_set.png",
-    plot = plt_mandelbrot,
-    device = "png",
-    path = fig_path,
-    width = 6,
-    height = 4,
-    dpi = "retina"
-)
+if (save_to_disk) {
+    logging::loginfo("Saving plot to disk...")
+    ggsave(
+        filename = file_name,
+        plot     = plt_mandelbrot,
+        device   = "png",
+        path     = fig_path,
+        width    = 6,
+        height   = 4,
+        dpi      = "retina"
+    )
+}
 
 
-
-
-
-
-
+## Remove intermediate variables ----
+logging::loginfo("Finished!")
+rm(list = setdiff(ls(), lsf.str()))
 
 
