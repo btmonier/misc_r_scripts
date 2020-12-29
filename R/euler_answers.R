@@ -9,20 +9,37 @@ n[n %% 3 == 0 | n %% 5 == 0] %>% sum() %>% paste0("Prob 001: ", .) %>% print()
 
 
 ## Problem 2 ----
+x <- 0
+y <- 1
+fib <- c()
+while (x < 4000000 & y < 4000000){
+    x <- x + y
+    y <- x + y
+    fib = c(fib, x, y)
+}
+fib %>% sum() %>% paste0("Prob 002: ", .) %>% print()
 
-fib <- function(n) {
-    if(n <= 1) {
-        return(n)
-    } else {
-        return(fib(n - 1) + fib(n - 2))
+
+## Problem 3 ----
+pf <- c()
+limit <- 13195
+n <- 1
+
+isPrime <- function(n) {
+    if (n <= 1) return(FALSE)
+    
+    for (i in 2:n) {
+        if (n %% i == 0) return(FALSE)
+        return(TRUE)
     }
+    
 }
 
-limit <- 100
-v <- sapply(seq_len(limit - 1), fib) %>%
-    .[. %% 2 == 0] %>% 
-    sum() %>% 
-    paste0("Prob 002: ", .) %>% 
-    print()
-
+for (i in 2:limit) {
+    if (limit %% i == 0) {
+        pf[n] <- i
+        n <- n + 1
+    }
+        
+}
 
