@@ -29,7 +29,7 @@ ilciCoords <- mapAes$coordUrl %>% read_sheet()
 ilciMap <- ilciCoords %>%
     ggplot() +
     borders(fill = mapAes$countryCol, colour = mapAes$countryBordCol) +
-    aes(x = long, y = lat, color = nari_institute, size = mapAes$nariSize) %>%
+    aes(x = long, y = lat, color = coi, size = mapAes$nariSize) %>%
     geom_point() +
     scale_size_continuous(guide = "none") +
     scale_color_manual(name = "NARI:", values = palette.colors()[-1] %>% as.vector()) +
