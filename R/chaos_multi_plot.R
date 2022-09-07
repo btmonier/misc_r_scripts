@@ -5,7 +5,7 @@
 # Description:   Iterate through random Chaos Game permutations
 # Author:        Brandon Monier
 # Created:       2020-06-11 at 17:41:32
-# Last Modified: 2022-09-07 at 09:24:35
+# Last Modified: 2022-09-07 at 09:34:30
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
@@ -64,6 +64,9 @@ chaos_points <- opt$npoints
 img_path     <- opt$out
 file_pre     <- opt$prefix
 total_plots  <- opt$nimage
+
+
+if (is.null(opt$out)) stop("Output path not supplied")
 
 
 ## Source functions ----
