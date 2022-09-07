@@ -38,12 +38,15 @@
 
 
 # The chaos game...
-chaosGame <- function(sides = 3,
-                      r = 0.5,
-                      iter = 10000,
-                      seq = c("random", "restrict"),
-                      vertex_choice = NULL,
-                      chaos = FALSE) {
+chaosGame <- function(
+        sides = 3,
+        r = 0.5,
+        iter = 10000,
+        seq = c("random", "restrict"),
+        vertex_choice = NULL,
+        chaos = FALSE,
+        verbose = FALSE
+) {
     if (sides < 3) {
         stop("3 or more sides are needed to generate polygons.")
     }
@@ -61,7 +64,7 @@ chaosGame <- function(sides = 3,
     if (seq == "random" && is.null(vertex_choice)) {
         cho <- seq_len(sides)
     } else if (seq == "random" && length(vertex_choice) < sides) {
-        warning(
+        if (verbose) warning(
             paste(
                 "Restricted vertices will not work with random sampling.",
                 "Using all vertices..."
@@ -69,7 +72,7 @@ chaosGame <- function(sides = 3,
         )
         cho <- seq_len(sides)
     } else if (seq == "restrict" && is.null(vertex_choice)) {
-        message(
+        if (verbose) message(
             paste(
                 "Vertex restriction not implemented.",
                 "Using all vertices..."
@@ -85,7 +88,7 @@ chaosGame <- function(sides = 3,
     }
 
     if (isTRUE(chaos)) {
-        message("Chaos has been implemented. All options will be random!")
+        if (verbose) message("Chaos has been implemented. All options will be random!")
         sides <- sample(3:10, 1)
         r <- 0.5
         cho <- sort(sample(seq_len(sides), sample(seq(2, sides), 1)))
