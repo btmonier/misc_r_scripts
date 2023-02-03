@@ -12,7 +12,7 @@ library(magrittr)
 
 
 ## Parameters ----
-## TEST
+## TEST2
 mapAes <- list(
     coordUrl       = "1zE1zjkSZywKHsDkp7OcBOB6dfOakEseWomz0sMmT87Y",
     countryCol     = "grey50",
