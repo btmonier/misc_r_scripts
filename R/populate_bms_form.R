@@ -48,7 +48,7 @@ bmsData %>%
         Q3,
         NPSEL
     ) %>%
-    mutate(NPSEL = "YES") %>%
+    mutate(NPSEL = 1) %>%
     mutate(
         Q1 = ifelse(is.na(Q1), 0, Q1),
         Q2 = ifelse(is.na(Q2), 0, Q2),
