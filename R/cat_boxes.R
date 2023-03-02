@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #--------------------------------------------------------------------
 # Script Name:   test.R
 # Description:   Make a console box

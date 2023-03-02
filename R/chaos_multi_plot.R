@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #--------------------------------------------------------------------
 # Script Name:   chaos_multi_plot.R
 # Description:   Iterate through random Chaos Game permutations
