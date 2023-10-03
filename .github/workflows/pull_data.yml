@@ -20,6 +20,7 @@ jobs:
           IRIS_URL='https://raw.githubusercontent.com/plotly/datasets/master/iris-data.csv'
           wget -O iris_dataset.csv $IRIS_URL
           rm data/iris_dataset.csv && mv iris_dataset.csv data/iris_dataset.csv
+          echo "## Last update: `date -u`" >> data/iris_dataset.csv
       - name: Commit synced records
         run: |
           git config --global user.name 'Brandon Monier'
