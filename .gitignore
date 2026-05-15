@@ -41,3 +41,5 @@ rsconnect/
 *.Rproj
 .Rproj.user
 .positai
+.pdf
+.log

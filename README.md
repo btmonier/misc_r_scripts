@@ -1,9 +1,6 @@
 
-Miscellaneous R Scripts
------------------------
+# Miscellaneous R Scripts
 
-Here is a collection of random scripts throughout my career that should be used as reference **only**. Some of these scripts *may* become prototypes for future package development.
+Random R script ideas throughout the ages...
 
-------------------------------------------------------------------------
 
-*Last updated:* 2018-11-16
