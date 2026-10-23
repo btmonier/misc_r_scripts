@@ -1,19 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   random_walk_snowflakes.R
-# Description:   Snow flakes made using randowm walks
-# Author:        Brandon Monier
-# Created:       2020-05-16 at 21:13:49
-# Last Modified: 2020-05-17 at 14:50:16
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to make radial symmetrical
-#    patterns on a cartesian coordinate plane using point values
-#    generated using a random walk procedure.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Snowflakes Made With Random Walks
+# Author:  Brandon Monier
+# Created: 2020-05-16
+#
+# Make radial symmetrical patterns on a cartesian coordinate plane using point
+# values generated using a random walk procedure.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -41,9 +35,6 @@ rotate <- function(x, y, angle, r_class) {
         )
     )
 }
-
-
-
 
 
 # === Random walk data generation ===================================
@@ -103,17 +94,16 @@ plt_rw <- rw_final %>%
 print(plt_rw)
 
 
-
 # === Iterate =======================================================
 
 ## Parameters ----
 total_plots <- 100
-iter        <- 750
-sig2        <- 15
-angles      <- seq(0, 315, 45)
-save_path   <- "../../tmp/fig_output/brownian_snowflakes/"
-prefix      <- "rw_snow_"
-colors      <- c("#5f2c82", "#49a09d")
+iter <- 750
+sig2 <- 15
+angles <- seq(0, 315, 45)
+save_path <- "../../tmp/fig_output/brownian_snowflakes/"
+prefix <- "rw_snow_"
+colors <- c("#5f2c82", "#49a09d")
 
 
 ## Create  and save plots to disk ----
@@ -123,7 +113,6 @@ grad_colors <- grDevices::colorRampPalette(colors)(total_plots)
 
 ### Iterate
 for (plot in seq_len(total_plots)) {
-
     # Output logging information
     pad_num <- formatC(
         x = plot,
@@ -199,18 +188,17 @@ for (plot in seq_len(total_plots)) {
 }
 
 
-
 # === Iterate (test sigma variances on fixed seed) ==================
 
 ## Parameters ----
 total_plots <- 100
-iter        <- 750
-seed        <- 123
-sig_max     <- 50
-angles      <- seq(0, 315, 45)
-save_path   <- "../../tmp/fig_output/brownian_snowflakes/"
-prefix      <- "rw_snow_sig_"
-colors      <- c("#5f2c82", "#49a09d")
+iter <- 750
+seed <- 123
+sig_max <- 50
+angles <- seq(0, 315, 45)
+save_path <- "../../tmp/fig_output/brownian_snowflakes/"
+prefix <- "rw_snow_sig_"
+colors <- c("#5f2c82", "#49a09d")
 
 
 ## Create and save plots to disk ----
@@ -221,7 +209,6 @@ sig2 <- seq(1, sig_max, length.out = total_plots)
 
 ### Iterate
 for (plot in seq_len(total_plots)) {
-
     # Set seed (for reproducibility)
     set.seed(seed)
 
@@ -302,5 +289,3 @@ for (plot in seq_len(total_plots)) {
         dpi      = "retina"
     )
 }
-
-

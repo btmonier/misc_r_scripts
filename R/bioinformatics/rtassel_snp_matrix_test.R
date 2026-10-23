@@ -1,3 +1,9 @@
+#------------------------------------------------------------------------------
+# Title:   rTASSEL SNP Matrix Test
+# Author:  Brandon Monier
+#
+# Build a random genotype matrix with TASSEL Java classes through rJava.
+#------------------------------------------------------------------------------
 
 library(magrittr)
 library(rJava)
@@ -11,12 +17,11 @@ params <- list(
 
 
 supByteMatBuilder <- J("net/maizegenetics/util/SuperByteMatrixBuilder")
-taxaListBuilder   <- J("net/maizegenetics/taxa/TaxaListBuilder")
-taxon             <- J("net/maizegenetics/taxa/Taxon")
+taxaListBuilder <- J("net/maizegenetics/taxa/TaxaListBuilder")
+taxon <- J("net/maizegenetics/taxa/Taxon")
 
 nucConst <- J("net/maizegenetics/dna/snp/NucleotideAlignmentConstants")
-gtUtils  <- J("net/maizegenetics/dna/snp/GenotypeTableUtils")
-
+gtUtils <- J("net/maizegenetics/dna/snp/GenotypeTableUtils")
 
 
 ## Random genotype matrix ----
@@ -35,7 +40,9 @@ genotypes <- genoCallBuilder$getUnphasedNucleotideGenotypeBuilder(
 
 for (i in seq_len(params$nRow)) {
     for (j in seq_len(params$nCol)) {
-        snpVal <- snpRMat[i, j] %>% strsplit("") %>% unlist()
+        snpVal <- snpRMat[i, j] %>%
+            strsplit("") %>%
+            unlist()
         byteVal <- gtUtils$getDiploidValue(
             nucConst$getNucleotideDiploidByte(snpVal[1]) %>% .jbyte(),
             nucConst$getNucleotideDiploidByte(snpVal[2]) %>% .jbyte()
@@ -49,15 +56,13 @@ for (i in seq_len(params$nRow)) {
 }
 
 
-
 ## Random taxa IDs ----
 taxa <- paste0("Sample_", LETTERS[seq_len(params$nRow)])
-tlb  <- .jnew("net/maizegenetics/taxa/TaxaListBuilder")
+tlb <- .jnew("net/maizegenetics/taxa/TaxaListBuilder")
 
 for (i in taxa) {
     tlb$add(.jnew("net/maizegenetics/taxa/Taxon", i))
 }
-
 
 
 ## Random position list
@@ -74,7 +79,6 @@ chroms <- paste0(
 positions <- sample(1:100000, params$nCol) %>% .[order(.)]
 
 
-
 plb <- .jnew("net/maizegenetics/dna/map/PositionListBuilder")
 for (i in seq_len(params$nCol)) {
     plb$add(
@@ -87,7 +91,6 @@ for (i in seq_len(params$nCol)) {
 }
 
 
-
 gtBuilder <- J("net/maizegenetics/dna/snp/GenotypeTableBuilder")
 myGt <- gtBuilder$getInstance(
     genotypes$build(),
@@ -96,11 +99,3 @@ myGt <- gtBuilder$getInstance(
 )
 
 rTASSEL:::.tasselObjectConstructor(myGt)
-
-
-
-
-
-
-
-

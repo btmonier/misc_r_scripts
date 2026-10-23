@@ -1,8 +1,7 @@
 #------------------------------------------------------------------------------
-# Title:         Function - Disk Usage Monitor
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2018-05-07 12:29:45 CDT
-# Last Modified: 2018-05-18 18:26:13 CDT
+# Title:   Disk Usage Monitor
+# Author:  Brandon Monier
+# Created: 2018-05-07
 #------------------------------------------------------------------------------
 
 # source("D:\\Box Sync\\misc-scripts-r\\misc-prop-bar.R")
@@ -12,9 +11,9 @@ getDiskUsage <- function() {
     disks <- system(call, inter = TRUE)
 
     disks <- read.fwf(
-        textConnection(disks[1:(length(disks)-1)]), 
-        widths = c(9, 13, 13), 
-        strip.white = TRUE, 
+        textConnection(disks[1:(length(disks) - 1)]),
+        widths = c(9, 13, 13),
+        strip.white = TRUE,
         stringsAsFactors = FALSE
     )
 

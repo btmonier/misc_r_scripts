@@ -1,30 +1,24 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   mat_algebra.R
-# Description:   Matrix Algebra using R
-# Author:        Brandon Monier
-# Created:       2019-01-09 at 21:56:54
-# Last Modified: 2019-01-09 at 23:10:12
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to generate answers to
-#    some matrix algebra problems from the Tuscon Plant Breeding
-#    Institute workshops.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Matrix Algebra using R
+# Author:  Brandon Monier
+# Created: 2019-01-09
+#
+# Answers to some matrix algebra problems from the Tucson Plant Breeding
+# Institute workshops.
+#------------------------------------------------------------------------------
 
 # === Question 1 ====================================================
 
 ## Make matrix
 A <- matrix(
     data = c(
-        3, 4, 4, 6, 9, 2, 
-        -1, -6, 1, 1, 1, 
+        3, 4, 4, 6, 9, 2,
+        -1, -6, 1, 1, 1,
         -10, 2, 9, 2, -1
-    ), 
-    nrow = 4, 
+    ),
+    nrow = 4,
     byrow = TRUE
 )
 
@@ -32,8 +26,8 @@ A <- matrix(
 C <- matrix(
     data = c(
         -10, 20, 2, -10
-    ), 
-    nrow = 4, 
+    ),
+    nrow = 4,
     byrow = TRUE
 )
 

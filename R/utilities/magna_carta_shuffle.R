@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Presentation Order Shuffle
+# Author:  Brandon Monier
+#
+# Randomly order lab members for presentations.
+#------------------------------------------------------------------------------
+
 set.seed(1215)
 library(magrittr)
 
@@ -17,13 +24,8 @@ antHill <- c(
 antHillRand <- sample(antHill, length(antHill), replace = FALSE)
 
 
-
 msg <- paste0("Presentation order for ", Sys.Date(), ":\n")
 cat(msg)
 antHillRand %>%
     paste("*", .) %>%
     cat(sep = "\n")
-
-
-
-

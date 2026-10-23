@@ -1,14 +1,14 @@
-#-----------------------------------------------------#
-# Title:  Taxonomy string split with regex filters    #
-# Author: Brandon Monier (brandon.monier@sdstate.edu) #
-# Date:   07.19.16                                    #
-#-----------------------------------------------------#
+#------------------------------------------------------------------------------
+# Title:   Taxonomy string split with regex filters
+# Author:  Brandon Monier
+# Created: 2016-07-19
+#------------------------------------------------------------------------------
 
 #-------
 # Prelim
 #-------
 
-df.tax <- read.delim('location')
+df.tax <- read.delim("location")
 
 
 #-------------
@@ -16,7 +16,7 @@ df.tax <- read.delim('location')
 #-------------
 
 # Extract taxonomy variable and break it apart '(n);'
-tax <- strsplit(as.character(df.tax$Taxonomy), '\\([^\\)]+\\);')
+tax <- strsplit(as.character(df.tax$Taxonomy), "\\([^\\)]+\\);")
 
 # Row bind
 tmp <- do.call(rbind, tax)

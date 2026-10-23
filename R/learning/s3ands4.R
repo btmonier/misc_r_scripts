@@ -1,9 +1,13 @@
-# S3 and S4 object test
+#------------------------------------------------------------------------------
+# Title:   S3 and S4 Objects
+# Author:  Brandon Monier
+#
+# Compare generic functions and simple classes in S3 and S4.
+#------------------------------------------------------------------------------
 
 # Integers and factors... ----
 x <- rep(0:1, c(10, 20))
 y <- as.factor(x)
-
 
 
 # Generic functions ----
@@ -17,41 +21,39 @@ plot(x)
 plot(y)
 
 
-
 # S3 programming ----
 myx <- x
 class(myx) <- "myvector"
 
 print.myvector <- function(x, ...) {
-  cat("This is your vector:\n")
-  cat(paste(x[1:5]), "...\n")
+    cat("This is your vector:\n")
+    cat(paste(x[1:5]), "...\n")
 }
 
 summary.myvector <- function(x, ...) {
-  cat("\nSUMMARY STATISTICS \n")
-  cat("   Unique values : ", paste(unique(x)), "\n")
-  cat("   Length        : ", length(x), "\n")
-  cat("   Integer       : ", is.integer(x), "\n\n")
+    cat("\nSUMMARY STATISTICS \n")
+    cat("   Unique values : ", paste(unique(x)), "\n")
+    cat("   Length        : ", length(x), "\n")
+    cat("   Integer       : ", is.integer(x), "\n\n")
 }
-
 
 
 # Another S3 exampple ----
-calculator <- function(x, ...) UseMethod("calculator") 
+calculator <- function(x, ...) UseMethod("calculator")
 
 calculator.default <- function(x, y, ...) {
-  add <- list()
-  add$x <- x
-  add$y <- y
-  add$sum <- sum(x, y)
-  class(add) <- "calculator"
-  add
+    add <- list()
+    add$x <- x
+    add$y <- y
+    add$sum <- sum(x, y)
+    class(add) <- "calculator"
+    add
 }
 
 print.calculator <- function(x, ...) {
-  cat("Your calculation results:\n")
-  cat("   Variable (x) :", paste(x$x), "\n")
-  cat("   Variable (y) :", paste(x$y), "\n")
-  cat("   Formula      :", paste0("'", x$x, " + ", x$y, "'\n"))
-  cat("   Calc. result :", paste(sum(x$sum)), "\n")
+    cat("Your calculation results:\n")
+    cat("   Variable (x) :", paste(x$x), "\n")
+    cat("   Variable (y) :", paste(x$y), "\n")
+    cat("   Formula      :", paste0("'", x$x, " + ", x$y, "'\n"))
+    cat("   Calc. result :", paste(sum(x$sum)), "\n")
 }

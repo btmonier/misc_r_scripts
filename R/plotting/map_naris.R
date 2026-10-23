@@ -1,10 +1,8 @@
-#--------------------------------------------------------------------
-# Script Name:   map_naris.R
-# Description:   Map NARI locations on world map
-# Author:        Brandon Monier
-# Created:       2022-05-23 at 13:52:36
-# Last Modified: 2022-05-23 at 15:22:18
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Map NARI locations on world map
+# Author:  Brandon Monier
+# Created: 2022-05-23
+#------------------------------------------------------------------------------
 
 library(ggplot2)
 library(googlesheets4)
@@ -34,7 +32,7 @@ ilciMap <- ilciCoords %>%
     geom_point() +
     scale_size_continuous(guide = "none") +
     scale_color_manual(name = "NARI:", values = palette.colors()[-1] %>% as.vector()) +
-    guides(color = guide_legend(override.aes = list(size=5))) +
+    guides(color = guide_legend(override.aes = list(size = 5))) +
     theme_minimal() +
     theme(
         axis.text = element_blank(),
@@ -48,5 +46,3 @@ ilciMap <- ilciCoords %>%
 
 ## Show ----
 ilciMap %>% print()
-
-

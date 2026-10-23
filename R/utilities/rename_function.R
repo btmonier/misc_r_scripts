@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Rename Columns
+# Author:  Brandon Monier
+#
+# Rename the last n columns of a data frame.
+#------------------------------------------------------------------------------
+
 library(magrittr)
 library(dplyr)
 
@@ -12,7 +19,7 @@ test <- tibble(
 
 
 ## Function ----
-renamer <- function(df, n_last, vec2){
+renamer <- function(df, n_last, vec2) {
     nms <- names(df) %>% `[`(seq(from = ncol(df) - n_last + 1, to = ncol(df)))
     vec <- setNames(object = nms, vec2)
     df %>%

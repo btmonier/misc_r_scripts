@@ -1,12 +1,10 @@
 #------------------------------------------------------------------------------
-# Title:         Function - Caesar Cipher
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2018-05-18 12:55:20 CDT
-# Last Modified: 2018-05-18 19:55:14 CDT
+# Title:   Caesar Cipher
+# Author:  Brandon Monier
+# Created: 2018-05-18
 #------------------------------------------------------------------------------
 
 encryptCaesar <- function(x, shift = 3) {
-
     if (shift > 26) {
         stop("Cipher shifts can only be less than or equal to 26.")
     } else if (length(x) > 1) {
@@ -14,7 +12,7 @@ encryptCaesar <- function(x, shift = 3) {
     } else if (!grepl("^[ A-Za-z]+$", x)) {
         message("Removing special characters and numbers...")
         x <- gsub("[[:punct:][:digit:]]+", "", x)
-    } 
+    }
 
     # Convert letters to numerical representations
     x1 <- toupper(x)
@@ -39,7 +37,7 @@ decryptCaesar <- function(x, key = NULL) {
     } else if (!grepl("^[ A-Za-z]+$", x)) {
         message("Removing special characters...\n\n")
         x <- gsub("[[:punct:][:digit:]]+", "", x)
-    } 
+    }
 
     # Convert letters to numerical representations
     x1 <- toupper(x)
@@ -61,7 +59,7 @@ decryptCaesar <- function(x, key = NULL) {
             })
             message("")
             names(decrypt_list) <- paste0(
-                "decryption_shift_", 
+                "decryption_shift_",
                 sprintf("%02d", 1:length(decrypt_list))
             )
             x1 <- decrypt_list[nchar(decrypt_list) == length(x1) + 3]
@@ -75,10 +73,10 @@ decryptCaesar <- function(x, key = NULL) {
                 x1 <- paste(x1, collapse = "")
             })
             names(x1) <- paste0(
-                "decryption_shift_", 
+                "decryption_shift_",
                 sprintf("%02d", 1:length(x1))
             )
-            x1 <- decrypt_list[nchar(decrypt_list) == nchar(x)]            
+            x1 <- decrypt_list[nchar(decrypt_list) == nchar(x)]
         }
         return(x1)
     } else if (!is.numeric(key)) {

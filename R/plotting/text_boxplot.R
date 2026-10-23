@@ -1,17 +1,23 @@
+#------------------------------------------------------------------------------
+# Title:   Text Box Plot
+# Author:  Brandon Monier
+#
+# Draw a box plot in the console with text characters.
+#------------------------------------------------------------------------------
 
 ## Parameters
 charLen <- 25
 v <- runif(100)
 
 textBoxPlot <- function(v, charLen = 25) {
-    m   <- mean(v)
+    m <- mean(v)
     minV <- min(v)
     maxV <- max(v)
     lenV <- sum(abs(c(minV, maxV)))
     loQ <- quantile(v)[[2]]
     upQ <- quantile(v)[[4]]
 
-    mUse   <- round((sum(abs(c(m, minV))) / lenV) * charLen, 0)
+    mUse <- round((sum(abs(c(m, minV))) / lenV) * charLen, 0)
     loQUse <- round((sum(abs(c(loQ, minV))) / lenV) * charLen, 0)
     upQUse <- round((sum(abs(c(upQ, minV))) / lenV) * charLen, 0)
 

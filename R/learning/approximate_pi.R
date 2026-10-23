@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   approximate_pi.R
-# Description:   Approximate the value of PI
-# Author:        Brandon Monier
-# Created:       2020-05-23 at 22:04:32
-# Last Modified: 2020-05-23 at 22:40:19
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to approximate the value of
-#    PI using simple mathematic formulas.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Approximate the value of PI
+# Author:  Brandon Monier
+# Created: 2020-05-23
+#
+# Approximate the value of PI using simple mathematic formulas.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -26,7 +20,7 @@ library(tibble)
 
 
 ## Parameters ----
-r    <- 20
+r <- 20
 iter <- 15e3
 
 
@@ -67,9 +61,3 @@ print(plt_pi)
 circle <- length(pi_df$in_circle[pi_df$in_circle == 1])
 app_pi <- 4 * (circle / iter)
 logging::loginfo(glue::glue("The value of pi is approximately {app_pi}."))
-
-
-
-
-
-

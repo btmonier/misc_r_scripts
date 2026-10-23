@@ -1,4 +1,9 @@
-# test
+#------------------------------------------------------------------------------
+# Title:   Apply Functions
+# Author:  Brandon Monier
+#
+# Examples of the apply family of functions.
+#------------------------------------------------------------------------------
 
 seq(1, 16)
 
@@ -16,8 +21,8 @@ m
 str(m)
 dim(m)
 
-apply(m , 1, sum)
-apply(m , 2, sum)
+apply(m, 1, sum)
+apply(m, 2, sum)
 
 sum(1, 5, 9, 13, 17, 21, 25, 29)
 sum(1:4, 17:20)

@@ -1,8 +1,7 @@
 #------------------------------------------------------------------------------
-# Title:         Polygon Pattern Generation
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2018-04-30 13:44:10 CDT
-# Last Modified: 2018-06-06 15:42:05 CDT
+# Title:   Polygon Pattern Generation
+# Author:  Brandon Monier
+# Created: 2018-04-30
 #------------------------------------------------------------------------------
 
 # Polygon data frames
@@ -38,7 +37,6 @@ ngon_prime <- function(x = 2, y = 2, col1 = "#4d4d4d", col2 = "#add8e6") {
 
     structure(df.ls, x = x, y = y, class = "ngon")
 }
-
 
 
 # Generate polygons
@@ -78,7 +76,6 @@ print.ngon <- function(ngon_data, ...) {
 }
 
 
-
 # Iterate
 quiltr <- function(sym = c("reflect", "rotate"),
                    iter = 1,
@@ -87,7 +84,7 @@ quiltr <- function(sym = c("reflect", "rotate"),
     sym_type <- c("reflect", "rotate")
     if (missing(sym) || !sym %in% sym_type) {
         stop("Incorrect symmetry parameter.")
-    } 
+    }
 
     pad <- nchar(iter)
     pad <- paste0("%0", pad, "d")
@@ -147,9 +144,9 @@ quiltr <- function(sym = c("reflect", "rotate"),
         for (i in seq_len(iter)) {
             message(
                 paste0(
-                    "Generating reflected quilt: ", 
+                    "Generating reflected quilt: ",
                     sprintf(pad, i),
-                    " / ", 
+                    " / ",
                     iter
                 )
             )

@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   game_of_life_dictionary.R
-# Description:   Example scenarios for Game of Life conditions
-# Author:        Brandon Monier
-# Created:       2020-05-31 at 16:58:22
-# Last Modified: 2020-05-31 at 17:17:32
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to create a list data
-#    object that contains interesting scenarios to generate in
-#    Conway's Game of Life.
+#------------------------------------------------------------------------------
+# Title:   Example scenarios for Game of Life conditions
+# Author:  Brandon Monier
+# Created: 2020-05-31
+#
+# Create a list data object that contains interesting scenarios to generate in
+# Conway's Game of Life.
 #
 # Current scenarios:
 #    * chaos_small        - Random patterns in small scale
@@ -22,7 +16,7 @@
 #    * oscillator_beacon  - Beacon oscillator
 #    * oscillator_blinker - Blinker oscillator
 #    * oscillator_pulsar  - Pulsar oscillator
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 ls_gol <- list(
     ## chaos_small ----

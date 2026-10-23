@@ -1,22 +1,17 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   maze_generator.R
-# Description:   Maze generation in R
-# Author:        Brandon Monier
-# Created:       2019-11-23 at 22:01:46
-# Last Modified: 2019-12-01 at 22:34:51
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to generate mazes in R. We
-#    will (hopefully) make a "depth-first search" algorithm...
+#------------------------------------------------------------------------------
+# Title:   Maze generation in R
+# Author:  Brandon Monier
+# Created: 2019-11-23
 #
-#    NOTE:
-#      i = row
-#      j = column
-#--------------------------------------------------------------------
+# Generate mazes in R. We will (hopefully) make a "depth-first search"
+# algorithm...
+#
+# NOTE:
+#   i = row
+#   j = column
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -29,8 +24,7 @@ library(tibble)
 ## Global variables ----
 cols <- 15
 rows <- 5
-w    <- 1
-
+w <- 1
 
 
 # === Maze generation (I) ===========================================
@@ -38,24 +32,23 @@ w    <- 1
 ## Cell data set ----
 cell <- function(i,
                  j,
-                 w       = 1,
-                 top     = TRUE,
-                 bottom  = TRUE,
-                 left    = TRUE,
-                 right   = TRUE,
+                 w = 1,
+                 top = TRUE,
+                 bottom = TRUE,
+                 left = TRUE,
+                 right = TRUE,
                  visited = FALSE) {
-
     line_color <- "white"
     d_width <- 4
 
     fill_hex <- if (visited) "#ffbdbd" else "#8a8a8a"
 
-    l_d <- if (left)   c(j    , i    , j    , i + w) else rep(NA, d_width)
-    r_d <- if (right)  c(j + w, i    , j + w, i + w) else rep(NA, d_width)
-    t_d <- if (top)    c(j    , i + w, j + w, i + w) else rep(NA, d_width)
-    b_d <- if (bottom) c(j    , i    , j + w, i    ) else rep(NA, d_width)
+    l_d <- if (left) c(j, i, j, i + w) else rep(NA, d_width)
+    r_d <- if (right) c(j + w, i, j + w, i + w) else rep(NA, d_width)
+    t_d <- if (top) c(j, i + w, j + w, i + w) else rep(NA, d_width)
+    b_d <- if (bottom) c(j, i, j + w, i) else rep(NA, d_width)
 
-    line_data = tibble::tibble(
+    line_data <- tibble::tibble(
         #         left    right   top     bottom
         xlmin = c(l_d[1], r_d[1], t_d[1], b_d[1]),
         ylmin = c(l_d[2], r_d[2], t_d[2], b_d[2]),
@@ -63,7 +56,7 @@ cell <- function(i,
         ylmax = c(l_d[4], r_d[4], t_d[4], b_d[4])
     )
 
-    shape_data = tibble::tibble(
+    shape_data <- tibble::tibble(
         xmin = j,
         xmax = j + 1,
         ymin = i,
@@ -82,12 +75,11 @@ cell <- function(i,
 
 ## Randomly pick cell neighbor ---
 pickNeighbor <- function(prev, prev_hist, rows, cols) {
-
     neighbors <- list(
-        top = c(prev[1] + 1, prev[2]    ),
-        bot = c(prev[1] - 1, prev[2]    ),
-        lft = c(prev[1]    , prev[2] - 1),
-        rgt = c(prev[1]    , prev[2] + 1)
+        top = c(prev[1] + 1, prev[2]),
+        bot = c(prev[1] - 1, prev[2]),
+        lft = c(prev[1], prev[2] - 1),
+        rgt = c(prev[1], prev[2] + 1)
     )
 
     filt <- lapply(neighbors, function(i) {
@@ -114,9 +106,8 @@ pickNeighbor <- function(prev, prev_hist, rows, cols) {
 
 ## Navigate "random" path through grid ----
 pathFinder <- function(rows, cols, visit = 1, empty = 0) {
-
-    mat <- matrix(empty, nrow = rows, ncol = cols);
-    mat_hist  <- list()
+    mat <- matrix(empty, nrow = rows, ncol = cols)
+    mat_hist <- list()
     prev_hist <- list()
 
     mat[1, 1] <- visit
@@ -161,7 +152,6 @@ pathFinder <- function(rows, cols, visit = 1, empty = 0) {
 
 ## Show ----
 cell_iterator <- function(rows, cols, path_hist, ...) {
-
     # Preamble
     grid_data <- matrix(data = list(), nrow = rows, ncol = cols)
     f1 <- function(x, y) all(x == y)
@@ -169,7 +159,6 @@ cell_iterator <- function(rows, cols, path_hist, ...) {
     # Generate path aesthetics
     for (i in seq_len(rows)) {
         for (j in seq_len(cols)) {
-
             if (any(mapply(f1, list(c(j, i)), path_hist))) {
                 tmp_cell <- cell(i, j, visited = TRUE)
             } else {
@@ -205,7 +194,6 @@ cell_iterator <- function(rows, cols, path_hist, ...) {
         )
     )
 }
-
 
 
 # === Visualize =====================================================
@@ -247,7 +235,6 @@ cell_plot <- ggplot() +
 cell_plot %>% print()
 
 
-
 # === TEST ==========================================================
 
 # ## Iterate through path example ----
@@ -263,5 +250,3 @@ cell_plot %>% print()
 #     )
 #     box(col = "gray92")
 # }
-
-

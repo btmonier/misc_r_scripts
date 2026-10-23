@@ -1,9 +1,17 @@
+#------------------------------------------------------------------------------
+# Title:   HTML to Markdown
+# Author:  Brandon Monier
+#
+# Convert an HTML release notes page into a Markdown file, for example for
+# MkDocs.
+#------------------------------------------------------------------------------
+
 library(rvest)
 library(stringr)
 
 # 2. Define input/output paths
-input_file  <- ""
-output_file <- ""  # e.g. inside your MkDocs `docs/` folder
+input_file <- ""
+output_file <- "" # e.g. inside your MkDocs `docs/` folder
 
 # 3. Read the HTML document
 doc <- read_html(input_file)
@@ -19,8 +27,12 @@ versions <- version_nodes %>% html_text(trim = TRUE)
 change_lists <- version_nodes %>%
     map(~ {
         node <- .x %>% html_node(xpath = "following-sibling::ul[1]")
-        if (is.na(node)) return(character(0))
-        node %>% html_nodes("li") %>% html_text(trim = TRUE)
+        if (is.na(node)) {
+            return(character(0))
+        }
+        node %>%
+            html_nodes("li") %>%
+            html_text(trim = TRUE)
     })
 
 # 6. Build Markdown lines
@@ -37,9 +49,10 @@ md <- c(
 
 # 7. Append each version section
 for (i in seq_along(versions)) {
-    md <- c(md,
-            paste0("## ", versions[i]),  # use H2 under the main H1
-            ""
+    md <- c(
+        md,
+        paste0("## ", versions[i]), # use H2 under the main H1
+        ""
     )
     if (length(change_lists[[i]]) > 0) {
         md <- c(md, paste0("- ", change_lists[[i]]), "")
@@ -49,5 +62,3 @@ for (i in seq_along(versions)) {
 # 8. Write out to a .md file
 writeLines(md, output_file)
 message("Written Markdown to: ", output_file)
-
-

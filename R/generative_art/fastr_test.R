@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   FastR Benchmark
+# Author:  Brandon Monier
+#
+# Compare how fast the Clifford attractor runs in FastR and in base R.
+#------------------------------------------------------------------------------
+
 # https://en.wikipedia.org/wiki/Clifford_A._Pickover
 
 ## Load packages ----
@@ -28,10 +35,10 @@ clifford <- function(points, a, b, c, d, x0 = 0, y0 = 0) {
 
 ## Parameters ----
 points <- 50e6
-a      <- -1.5
-b      <- 1.5
-c      <- 1.5
-d      <- 1.6
+a <- -1.5
+b <- 1.5
+c <- 1.5
+d <- 1.6
 
 
 ## FastR preamble ----
@@ -63,5 +70,3 @@ cliff_times <- microbenchmark::microbenchmark(
     BaseR = clifford(points, a, b, c, d),
     times = 25
 )
-
-

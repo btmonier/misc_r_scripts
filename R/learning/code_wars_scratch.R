@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Codewars Practice
+# Author:  Brandon Monier
+#
+# My solutions to Codewars katas, next to the best solutions.
+#------------------------------------------------------------------------------
+
 # === CW 001 ========================================================
 
 ## My attempt ----
@@ -12,30 +19,28 @@ duplicate_count <- function(text) {
 
 
 ## Best attempt ----
-duplicate_count <- function(text){
+duplicate_count <- function(text) {
     sum(table(strsplit(tolower(text), "")) > 1)
 }
-
 
 
 # === CW 002 ========================================================
 
 ## My attempt ----
 bouncingBall <- function(h, bounce, window) {
-    
     ## Logic
     if (h <= 0) {
         return(-1)
     }
-    
+
     if (bounce <= 0 | bounce >= 1) {
         return(-1)
     }
-    
+
     if (window >= h) {
         return(-1)
     }
-    
+
     ## Iterate through variables while new height > window height
     new_height <- h * bounce
     fall_data <- 1 # will always fall at start...
@@ -51,8 +56,11 @@ bouncingBall <- function(h, bounce, window) {
 
 ## Best attempt ----
 bouncingBall <- function(h, bounce, window) {
-    if ((h <= 0.0) || (window >= h) || (bounce <= 0.0) || (bounce >= 1.0)) -1
-    else 2 + bouncingBall(h * bounce, bounce, window)
+    if ((h <= 0.0) || (window >= h) || (bounce <= 0.0) || (bounce >= 1.0)) {
+        -1
+    } else {
+        2 + bouncingBall(h * bounce, bounce, window)
+    }
 }
 
 
@@ -60,28 +68,30 @@ bouncingBall <- function(h, bounce, window) {
 
 ## My attempt ----
 group_by_commas <- function(n) {
-    
     ## Logic
-    if (n < 0 || n >= 2147483647) return(-1)
-    if (n < 1000) return(as.character(n))
-    
+    if (n < 0 || n >= 2147483647) {
+        return(-1)
+    }
+    if (n < 1000) {
+        return(as.character(n))
+    }
+
     ## Reverse string and split with , every 3 elements
     n <- as.integer(n)
     n <- paste0(rev(strsplit(as.character(n), "")[[1]]), collapse = "")
     n <- gsub("(.{3})", "\\1,", n)
     n <- paste0(rev(strsplit(as.character(n), "")[[1]]), collapse = "")
     n <- gsub("^,", "", n)
-    
+
     ## Return reversed
     return(n)
 }
 
 
 ## Best attempt ----
-group_by_commas <- function(n){
-    format(n, big.mark=',', scientific=F)
+group_by_commas <- function(n) {
+    format(n, big.mark = ",", scientific = F)
 }
-
 
 
 # === CW 004 ========================================================
@@ -95,10 +105,9 @@ get_count <- function(input_str) {
 
 
 ## Best attempt ----
-get_count <- function(input_str){
+get_count <- function(input_str) {
     nchar(gsub("[^aeiou]", "", input_str))
 }
-
 
 
 # === CW 005 ========================================================
@@ -120,18 +129,3 @@ movie <- function(card, ticket, perc) {
 
 
 ## Best attempt ----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

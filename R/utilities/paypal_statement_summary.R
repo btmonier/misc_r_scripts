@@ -1,11 +1,12 @@
 #------------------------------------------------------------------------------
-# Title:         PayPal PDF Statement Summary
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2026-06-02
-# Description:   Read a directory of PayPal account-activity PDF statements
-#                and print (optionally export) summary metrics.
-# Usage:         Rscript paypal_statement_summary.R --dir "C:/path/to/pdfs"
-# Dependencies:  pdftools (and stringr recommended)
+# Title:   PayPal PDF Statement Summary
+# Author:  Brandon Monier
+# Created: 2026-06-02
+#
+# Read a folder of PayPal account activity PDF statements and print summary
+# metrics. The combined transactions can also be exported to CSV.
+#
+# Usage: Rscript paypal_statement_summary.R --dir path/to/pdfs
 #------------------------------------------------------------------------------
 
 # === Preamble ================================================================
@@ -129,8 +130,8 @@ repair_wrapped_lines <- function(lines) {
         # Date year split onto next line only when this line is not already a full row.
         if (
             str_detect(line, "\\d{2}/\\d{2}/\\d{3}\\s") &&
-            !str_detect(line, TX_AMOUNT_LINE) &&
-            i < length(body)
+                !str_detect(line, TX_AMOUNT_LINE) &&
+                i < length(body)
         ) {
             next_line <- body[i + 1L]
             year_fix <- str_match(next_line, "^\\s*(\\d)\\s+(.*)$")
@@ -213,8 +214,8 @@ parse_transactions <- function(lines) {
         # Year digit wrapped to next line: "04/24/202" + "6  Depot"
         if (
             !is.na(core$date) &&
-            str_detect(core$date, "\\d{2}/\\d{2}/\\d{3}$") &&
-            length(detail_lines) > 0L
+                str_detect(core$date, "\\d{2}/\\d{2}/\\d{3}$") &&
+                length(detail_lines) > 0L
         ) {
             year_cont <- str_match(detail_lines[1L], "^\\s*(\\d)\\s+(.*)$")
             if (!is.na(year_cont[1, 1])) {

@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Get TASSEL JAR Files
+# Author:  Brandon Monier
+#
+# Download commit and library metadata for TASSEL 5 from Bitbucket.
+#------------------------------------------------------------------------------
+
 # library(cli)
 
 
@@ -50,7 +57,6 @@ getCommitMetaData <- function() {
 
 
 initializeJars <- function(root = "inst/") {
-
     md <- getCommitMetaData()
 
     j <- 1
@@ -63,18 +69,3 @@ initializeJars <- function(root = "inst/") {
     }
     cli::cli_alert_success("Downloaded {nrow(md)} jar files.")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,15 +1,10 @@
-#--------------------------------------------------------------------
-# Script Name:   test.R
-# Description:   Make a console box
-# Author:        Brandon Monier
-# Created:       2018-11-21 at 11:45:12
-# Last Modified: 2018-11-21 at 13:23:07
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    Make a console box of current console dimensions
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Make a console box
+# Author:  Brandon Monier
+# Created: 2018-11-21
+#
+# Make a console box of current console dimensions
+#------------------------------------------------------------------------------
 
 # Get column dimensions
 colwidth <- NA
@@ -36,7 +31,7 @@ if (is.na(boxheight)) {
     boxheight <- boxheight
 }
 
-boxtb <- paste0( 
+boxtb <- paste0(
     lmar,
     "+",
     strrep("-", colwidth - 2),
@@ -59,4 +54,3 @@ for (i in 1:boxheight) {
 boxout[1] <- boxtb
 boxout[boxheight] <- boxtb
 cat(boxout, sep = "")
-

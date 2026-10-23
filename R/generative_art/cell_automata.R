@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   cell_automata.R
-# Description:   Cellular automata
-# Author:        Brandon Monier
-# Created:       2020-05-05 at 21:01:29
-# Last Modified: 2020-05-09 at 23:59:07
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to produce cellular
-#    automation in R.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Cellular Automata
+# Author:  Brandon Monier
+# Created: 2020-05-05
+#
+# Produce cellular automata in R.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -42,7 +36,7 @@ ls_pattern <- matrix(
 ## Functions ----
 
 ### Convert integer number to bit
-intToBitVect <- function(x, l = 8, p = 0){
+intToBitVect <- function(x, l = 8, p = 0) {
     tmp <- rev(as.integer(intToBits(x)))
     id <- seq_len(match(1, tmp, length(tmp)) - 1)
     pad <- rep(p, l - length(tmp[-id]))
@@ -73,7 +67,6 @@ makeKmers <- function(x) {
 
 ### Create new generation ----
 evolver <- function(kmers, rule, ls_pattern = ls_pattern) {
-
     kmers %>%
         sapply(function(i) {
             rule[, 1:3] %>%
@@ -86,12 +79,11 @@ evolver <- function(kmers, rule, ls_pattern = ls_pattern) {
 
 ### Wrapper ----
 automata <- function(gen, rule, pattern = NULL, n_ind = 31) {
-
     if (rule > 255) stop("Rule ID cannot exceed 255")
 
     ## Initial pattern
-    if (is.null(pattern))  {
-        pattern_0 <- c(rep(0, (n_ind - 1) * 0.5 ), 1, rep(0, (n_ind - 1) * 0.5))
+    if (is.null(pattern)) {
+        pattern_0 <- c(rep(0, (n_ind - 1) * 0.5), 1, rep(0, (n_ind - 1) * 0.5))
     } else {
         pattern_0 <- pattern
     }
@@ -151,7 +143,6 @@ auto_res %>%
     )
 
 
-
 # ## Iterate ----
 # rules <- 0:255
 # pb <- progress_bar$new(
@@ -199,12 +190,3 @@ auto_res %>%
 #         units = "in"
 #     )
 # }
-
-
-
-
-
-
-
-
-

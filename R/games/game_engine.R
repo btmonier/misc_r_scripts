@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Console Game Engine
+# Author:  Brandon Monier
+#
+# Move a player around a text grid in the console with the arrow keys.
+#------------------------------------------------------------------------------
+
 width <- 15
 height <- 15
 
@@ -16,7 +23,6 @@ printMat <- function(m) {
 }
 
 
-
 draw <- function(m) {
     shell("cls")
     printMat(m)
@@ -24,7 +30,6 @@ draw <- function(m) {
 
 update <- function(m) {
     while (TRUE) {
-
         x <- keypress::keypress()
         px <- player[["px"]]
         py <- player[["py"]]

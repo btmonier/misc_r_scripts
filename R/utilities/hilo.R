@@ -1,19 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   hilo.R
-# Description:   Return highest and lowest numbers
-# Author:        Brandon Monier
-# Created:       2018-11-20 at 11:20:41
-# Last Modified: 2018-11-20 at 11:44:44
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The purpose of this R script is to make a function that given
-#    a string of numbers, will return a string that will contain
-#    the highest and lowest values within the string. Kata...
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Return highest and lowest numbers
+# Author:  Brandon Monier
+# Created: 2018-11-20
+#
+# Make a function that given a string of numbers, will return a string that
+# will contain the highest and lowest values within the string. Kata...
+#------------------------------------------------------------------------------
 
 # High-low function (requires stringr to run)
 highAndLow <- function(string) {

@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------
+# Title:   GFF Load Times
+# Author:  Brandon Monier
+#
+# Benchmark loading a compressed and an uncompressed GFF file with
+# GenomicFeatures.
+#------------------------------------------------------------------------------
+
 library(GenomicFeatures)
 library(microbenchmark)
 library(ggplot2)
@@ -14,8 +22,8 @@ results <- microbenchmark(
 
 autoplot(results)
 boxplot(
-    results, 
-    names = c("compressed", "no zip"), 
+    results,
+    names = c("compressed", "no zip"),
     xlab = ""
 )
 
@@ -23,7 +31,7 @@ results %>%
     mutate(
         expr = factor(expr, labels = c("Compression (GZip)", "No Compression")),
         time = time / 1e9
-    ) %>% 
+    ) %>%
     ggplot() +
     aes(x = expr, y = time) +
     ylab("Time (s)") +

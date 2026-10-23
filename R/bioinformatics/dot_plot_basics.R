@@ -1,19 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   dot_plot_basics.R
-# Description:   Create a string dot plot in pure R
-# Author:        Brandon Monier
-# Created:       2020-05-19 at 14:01:16
-# Last Modified: 2020-05-19 at 14:47:21
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to make an adjacency
-#    matrix given a an input string and plot results using nothing
-#    but base (i.e. pure) R.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Create a string dot plot in pure R
+# Author:  Brandon Monier
+# Created: 2020-05-19
+#
+# Make an adjacency matrix from an input string and plot the results using
+# only base R.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -34,13 +28,11 @@ library(reshape2)
 makeDNA <- function(l = 20,
                     alphabet = c("A", "C", "G", "T"),
                     collapse = FALSE) {
-
     bio_str <- sample(alphabet, l, replace = TRUE)
 
     if (collapse) bio_str <- paste(bio_str, collapse = "")
 
     return(bio_str)
-
 }
 
 ### Create dot plot matrix
@@ -78,7 +70,6 @@ dotPlot <- function(a, b) {
 }
 
 
-
 # === Test and visualize ============================================
 
 ## Make dot plot data ----
@@ -107,5 +98,3 @@ plt_dot <- dot_mat %>%
         title = element_text(face = "bold", color = "#424242")
     )
 print(plt_dot)
-
-

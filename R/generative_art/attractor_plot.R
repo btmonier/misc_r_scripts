@@ -1,3 +1,9 @@
+#------------------------------------------------------------------------------
+# Title:   Attractor Plot
+# Author:  Brandon Monier
+#
+# Plot strange attractors using a C++ function written with Rcpp.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -34,7 +40,6 @@ c <- 1.5
 d <- 1.56
 
 
-
 # === Data frame creation ===========================================
 
 ## Populate data frame
@@ -45,7 +50,7 @@ traj_df <- createTrajectory(points, 0, 0, a, b, c, d)
 tmp <- traj_df %>%
     ggplot() +
     aes(x, y) +
-    geom_point(color="white", shape=46, alpha=.01) +
+    geom_point(color = "white", shape = 46, alpha = .01) +
     theme_void() +
     theme(panel.background = element_rect(fill = "black"))
 
@@ -58,8 +63,3 @@ ggsave(
     units = "in",
     dpi = 500
 )
-
-
-
-
-

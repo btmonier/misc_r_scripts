@@ -1,25 +1,19 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   mandlebrot_generation.R
-# Description:   Visualize the Mandelbrot Set
-# Author:        Brandon Monier
-# Created:       2020-06-13 at 12:59:58
-# Last Modified: 2020-06-13 at 18:05:59
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to code the Mandelbrot set
-#    in base R.
+#------------------------------------------------------------------------------
+# Title:   Visualize the Mandelbrot Set
+# Author:  Brandon Monier
+# Created: 2020-06-13
 #
-#    The Mandelbrot Set (M-Set in short) is a fractal. It is plotted
-#    on the complex plane. It is an example of how intricate
-#    patterns can be formed from a simple math equation. It is
-#    entirely self-similar. Within the fractal, there are
-#    mini-Mandelbrot Sets, which have their own M-Sets, which have
-#    their own M-Sets, which have their own M-sets, etc.
-#--------------------------------------------------------------------
+# Code the Mandelbrot set in base R.
+#
+# The Mandelbrot Set (M-Set in short) is a fractal. It is plotted
+# on the complex plane. It is an example of how intricate
+# patterns can be formed from a simple math equation. It is
+# entirely self-similar. Within the fractal, there are
+# mini-Mandelbrot Sets, which have their own M-Sets, which have
+# their own M-Sets, which have their own M-sets, etc.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -53,22 +47,21 @@ save_to_disk <- TRUE
 static_image <- FALSE
 
 ### Matrix size (e.g. iterations)
-width  <- 105
+width <- 105
 height <- floor(width * 0.67)
 
 ### Figure path
-fig_path  <- "../../tmp/fig_output/"
+fig_path <- "../../tmp/fig_output/"
 file_name <- glue::glue("mandelbrot_set_{width}.png")
 
 ### Plot window
 re_start <- -2
-re_end   <- 1
+re_end <- 1
 im_start <- -1
-im_end   <- 1
+im_end <- 1
 
 ### Maximum iterations for Mandelbrot calculation
 max_iter <- 50
-
 
 
 # === Create Mandelbrot matrix data set =============================
@@ -93,7 +86,6 @@ for (i in seq(0, height)) {
 }
 
 
-
 # === Visualize =====================================================
 
 logging::loginfo("Generating visualization...")
@@ -108,7 +100,6 @@ plt_mandelbrot <- c_mat %>%
     coord_equal() +
     theme_void() +
     theme(legend.position = "none")
-
 
 
 ## Save to disk ----
@@ -127,5 +118,3 @@ if (save_to_disk) {
 
 
 logging::loginfo("Finished!")
-
-

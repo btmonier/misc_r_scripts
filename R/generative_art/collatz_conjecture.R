@@ -1,19 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   collatz_conjecture.R
-# Description:   Collatz conjecture formula
-# Author:        Brandon Monier
-# Created:       2019-10-28 at 17:18:44
-# Last Modified: 2019-11-03 at 12:09:22
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to show and visualize the
-#    Collatz Conjecture:
-#    (https://en.wikipedia.org/wiki/Collatz_conjecture)
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Collatz Conjecture
+# Author:  Brandon Monier
+# Created: 2019-10-28
+#
+# Show and visualize the Collatz Conjecture:
+# (https://en.wikipedia.org/wiki/Collatz_conjecture)
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -61,15 +55,14 @@ rotater <- function(px, py, steps, angle, angle_prior) {
 }
 
 
-
 # === Unit test 01 ==================================================
 
 ## Parameters ----
 even_turn <- 30
-odd_turn  <- -15
+odd_turn <- -15
 
-n     <- 7
-samp  <- collatzSequence(n) %>% rev()
+n <- 7
+samp <- collatzSequence(n) %>% rev()
 steps <- 1
 
 
@@ -123,14 +116,13 @@ tmp_ls %>%
     coord_fixed()
 
 
-
 # === Unit test 02 ==================================================
 
 ## Parameters ----
-n    <- 500
+n <- 500
 step <- 1
 even_turn <- 5
-odd_turn  <- -10
+odd_turn <- -10
 
 ## Iterate ----
 tmp_coll <- vector("list", length = n)
@@ -189,15 +181,14 @@ tmp_coll %>%
     theme(legend.position = "none")
 
 
-
 # === Unit test 03 ==================================================
 
 ## Parameters ----
 size <- 500
-n    <- sample(seq_len(1e6), size = size, replace = FALSE)
+n <- sample(seq_len(1e6), size = size, replace = FALSE)
 step <- 1
 even_turn <- 5
-odd_turn  <- -10
+odd_turn <- -10
 
 ## Iterate ----
 tmp_coll <- vector("list", length = size)
@@ -259,15 +250,14 @@ tmp_coll %>%
     )
 
 
-
 # === FINAL VISUALIZATION ===========================================
 
 ## Parameters ----
 size <- 1e4
-n    <- sample(seq_len(1e6), size = size, replace = FALSE)
+n <- sample(seq_len(1e6), size = size, replace = FALSE)
 step <- 1
 even_turn <- 5
-odd_turn  <- -10
+odd_turn <- -10
 
 ## Iterate ----
 tmp_coll <- vector("list", length = size)

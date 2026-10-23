@@ -1,6 +1,13 @@
+#------------------------------------------------------------------------------
+# Title:   Export Numeric Genotype Data
+# Author:  Brandon Monier
+#
+# Write a numeric genotype table in a format that TASSEL can read.
+#------------------------------------------------------------------------------
+
 library(magrittr)
 
-genotype_matrix <- data.frame(Taxa = c("B73", "Mo17", "Ky21"), Geno1 = c(0,1,1), Geno2 = c(0,0,1))
+genotype_matrix <- data.frame(Taxa = c("B73", "Mo17", "Ky21"), Geno1 = c(0, 1, 1), Geno2 = c(0, 0, 1))
 
 
 exportNumericOutput <- function(df, file, taxaCol = "Taxa") {
@@ -34,4 +41,3 @@ exportNumericOutput(genotype_matrix, file = outputFileName)
 readLines(outputFileName) %>% cat(sep = "\n")
 
 rTASSEL::readGenotypeTableFromPath(outputFileName)
-

@@ -1,8 +1,9 @@
 #------------------------------------------------------------------------------
-# Title:         Package Installation
-# Author:        Brandon Monier
-# Description:   Install the packages used by the scripts in this repository.
-#                Packages that are already installed are skipped.
+# Title:   Package Installation
+# Author:  Brandon Monier
+#
+# Install the packages used by the scripts in this repository. Packages that
+# are already installed are skipped.
 #------------------------------------------------------------------------------
 
 install_missing <- function(pkgs, installer) {

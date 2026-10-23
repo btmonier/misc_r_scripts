@@ -1,4 +1,9 @@
-# Clifford attractor test
+#------------------------------------------------------------------------------
+# Title:   Clifford Attractor Test
+# Author:  Brandon Monier
+#
+# Time a pure R version of the Clifford attractor.
+#------------------------------------------------------------------------------
 
 ## Function ----
 clifford <- function(points, a, b, c, d) {
@@ -12,7 +17,6 @@ clifford <- function(points, a, b, c, d) {
             x[i] <- sin(a * y[i - 1] + c * cos(a * x[i - 1]))
             y[i] <- sin(b * x[i - 1] + d * cos(b * y[i - 1]))
         }
-
     }
 
     return(
@@ -26,10 +30,10 @@ clifford <- function(points, a, b, c, d) {
 
 ## Parameters ----
 points <- 20e6
-a      <- -1.5
-b      <- 1.5
-c      <- 1.5
-d      <- 1.6
+a <- -1.5
+b <- 1.5
+c <- 1.5
+d <- 1.6
 
 
 ## Time tests ----
@@ -45,5 +49,3 @@ for (i in seq_len(iters)) {
 message("---")
 message("MEAN.... ", mean(times))
 message("STDEV... ", stats::sd(times))
-
-

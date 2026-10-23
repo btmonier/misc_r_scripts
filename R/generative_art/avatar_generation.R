@@ -1,8 +1,7 @@
 #------------------------------------------------------------------------------
-# Title:         Make a BUNCH of Avatars...
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2018-03-02 23:21:09 CST
-# Last Modified: 2018-03-03 01:04:56 CST
+# Title:   Generate Many Avatars
+# Author:  Brandon Monier
+# Created: 2018-03-02
 #------------------------------------------------------------------------------
 
 # Source and create directory (run from the repository root)
@@ -15,7 +14,7 @@ av.iter <- function(reps) {
     n <- nchar(reps)
     pb <- progress::progress_bar$new(
         format = "  Generating avatars [:bar] :percent in :elapsed",
-        total = reps, clear = FALSE, width= 70
+        total = reps, clear = FALSE, width = 70
     )
     num <- paste0("%0", n, "d")
     for (i in 1:reps) {
@@ -23,7 +22,7 @@ av.iter <- function(reps) {
         pad <- sprintf(num, as.numeric(i))
         main <- paste("Output", pad)
         file <- file.path(out_dir, paste0("av-out-", pad, ".png"))
-        Sys.sleep(0.5/reps)
+        Sys.sleep(0.5 / reps)
         png(filename = file)
         ran.av(main = main)
         dev.off()
@@ -74,13 +73,10 @@ tmp <- c(
 while (i != 0) {
     cat("  ", tmp[i])
     if (i > 34) {
-        i = i - 33
+        i <- i - 33
     } else {
-        i = i+1
+        i <- i + 1
     }
     Sys.sleep(0.1)
     cat("\014\n")
 }
-
-
-

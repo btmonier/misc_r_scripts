@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   GFF Parse Times
+# Author:  Brandon Monier
+#
+# Compare how long different ways of parsing a GFF file take.
+#------------------------------------------------------------------------------
+
 library(tictoc)
 
 # ## Preamble ----
@@ -12,12 +19,12 @@ library(tictoc)
 # ids <- c()
 # for (line in gffLines) {
 #     fields <- line |> strsplit("\t") |> unlist()
-#     
+#
 #     if (length(fields) == 1) next
-#     
+#
 #     feature <- fields[3]
 #     attributes <- fields[9]
-#     
+#
 #     if (feature == "gene") {
 #         featureId <- gsub("^ID=|;.*$", "", attributes)
 #         ids <- c(id, featureId)
@@ -32,12 +39,12 @@ library(tictoc)
 # for (i in seq_along(gffLines)) {
 #     line <- gffLines[i]
 #     fields <- line |> strsplit("\t") |> unlist()
-#     
+#
 #     if (length(fields) == 1) next
-#     
+#
 #     feature <- fields[3]
 #     attributes <- fields[9]
-#     
+#
 #     if (feature == "gene") {
 #         featureId <- gsub("^ID=|;.*$", "", attributes)
 #         ids[i] <- featureId
@@ -109,5 +116,3 @@ rm(gffFileCon)
 featureType <- paste0("\t", featureType, "\t")
 ids <- gsub("^.*ID=|;.*", "", gffLines[grepl(featureType, gffLines)])
 tictoc::toc()
-
-

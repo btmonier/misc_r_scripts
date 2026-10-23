@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   plot_functions.R
-# Description:   Miscellaneous plot funcion tests
-# Author:        Brandon Monier
-# Created:       2019-02-12 at 10:47:47
-# Last Modified: 2019-02-12 at 10:59:47
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to create easily deployable
-#    functions for plot generation using only base R.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Miscellaneous Plot Function Tests
+# Author:  Brandon Monier
+# Created: 2019-02-12
+#
+# Create easily deployable functions for plot generation using only base R.
+#------------------------------------------------------------------------------
 
 ## Cross plot
 plotr_cross <- function(len) {
@@ -81,6 +75,3 @@ for (i in seq_along(rot_seq)) {
         col = pal_seq[i]
     )
 }
-
-
-

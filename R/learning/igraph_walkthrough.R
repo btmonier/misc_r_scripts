@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   igraph_walkthrough.R
-# Description:   Scratchpad
-# Author:        Brandon Monier
-# Created:       2019-02-25 at 15:43:12
-# Last Modified: 2019-02-25 at 18:00:36
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to provide a simple
-#    walkthrough for igraph construction
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   igraph Walkthrough
+# Author:  Brandon Monier
+# Created: 2019-02-25
+#
+# Provide a simple walkthrough for igraph construction
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -26,13 +20,12 @@ nodes <- readr::read_csv(
 )
 
 
-
 # === Graph construction ============================================
 
 ## Make graph object
 net <- igraph::graph_from_data_frame(
-    d = links, 
-    vertices = nodes, 
+    d = links,
+    vertices = nodes,
     directed = TRUE
 )
 
@@ -44,7 +37,4 @@ plot(
 )
 
 ## Simplify graph object
-net <- igraph::simplify(net, remove.multiple = FALSE, remove.loops = TRUE) 
-
-
-
+net <- igraph::simplify(net, remove.multiple = FALSE, remove.loops = TRUE)

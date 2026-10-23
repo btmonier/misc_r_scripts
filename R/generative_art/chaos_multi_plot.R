@@ -1,18 +1,11 @@
-#--------------------------------------------------------------------
-# Script Name:   chaos_multi_plot.R
-# Description:   Iterate through random Chaos Game permutations
-# Author:        Brandon Monier
-# Created:       2020-06-11 at 17:41:32
-# Last Modified: 2022-09-07 at 09:34:30
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to generate random images
-#    of Chaos Game permutations (e.g. number of sides, vertex
-#    choices, r value, etc.) using Chaos Game methods built in pure
-#    R.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Iterate through random Chaos Game permutations
+# Author:  Brandon Monier
+# Created: 2020-06-11
+#
+# Generate random images of Chaos Game permutations (e.g. number of sides,
+# vertex choices, r value, etc.) using Chaos Game methods built in pure R.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -54,14 +47,14 @@ optionList <- list(
 
 ## Parse arguments ----
 optParser <- OptionParser(option_list = optionList)
-opt       <- parse_args(optParser)
+opt <- parse_args(optParser)
 
 
 ## Get parameters ----
 chaos_points <- opt$npoints
-img_path     <- opt$out
-file_pre     <- opt$prefix
-total_plots  <- opt$nimage
+img_path <- opt$out
+file_pre <- opt$prefix
+total_plots <- opt$nimage
 
 
 if (is.null(opt$out)) stop("Output path not supplied")
@@ -78,13 +71,11 @@ tryCatch(
 )
 
 
-
 # === Create random images ==========================================
 
 meta_df <- vector("list", length = total_plots)
 
 for (i in seq(1, total_plots)) {
-
     pad_num <- formatC(
         x = i,
         width = nchar(total_plots),
@@ -128,5 +119,3 @@ for (i in seq(1, total_plots)) {
 logging::loginfo(paste0("Saving metadata..."))
 meta_df <- do.call(rbind, meta_df)
 data.table::fwrite(meta_df, paste0(img_path, "metadata.csv"))
-
-

@@ -1,19 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   shiny_matrix_generator.R
-# Description:   Generate binary matrices in Shiny
-# Author:        Brandon Monier
-# Created:       2020-05-30 at 11:52:29
-# Last Modified: 2020-05-31 at 15:41:28
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to create a binary matrix
-#    (i.e. a matrix of 1s and 0s) using interactive command with the
-#    Shiny platform.
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Generate binary matrices in Shiny
+# Author:  Brandon Monier
+# Created: 2020-05-30
+#
+# Create a binary matrix (i.e. a matrix of 1s and 0s) using interactive
+# command with the Shiny platform.
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -22,7 +16,6 @@ library(ggplot2)
 library(magrittr)
 library(shiny)
 library(stringr)
-
 
 
 # === Shiny application (WIP) =======================================
@@ -100,12 +93,10 @@ server <- function(input, output) {
                     legend.position = "none",
                     panel.background = element_blank()
                 )
-
         }
     })
 
     output$info <- renderPrint({
-
         if (input$go == 0) {
             cat("## Click 'generate' to make data!")
         } else {
@@ -118,14 +109,10 @@ server <- function(input, output) {
             cat(paste0("    nrow = ", input$num_row, ",\n"))
             cat(paste0("    ncol = ", input$num_col, "\n"))
             cat(")")
-
         }
     })
-
 }
 
 
 ## Run application ----
 shinyApp(ui, server)
-
-

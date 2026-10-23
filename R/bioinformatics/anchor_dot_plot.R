@@ -1,15 +1,23 @@
+#------------------------------------------------------------------------------
+# Title:   Anchor Dot Plot
+# Author:  Brandon Monier
+#
+# Plot alignment anchors between a query and a reference genome as a dot plot,
+# faceted by chromosome.
+#------------------------------------------------------------------------------
+
 ## Libraries ----
 library(ggplot2)
 
 
 ## Function ----
 anchorDotPlot <- function(
-    anchorPath,
-    querySeqId,
-    refSeqId,
-    queryLab = NULL,
-    refLab = NULL,
-    colorId    = c("strand", "score")
+  anchorPath,
+  querySeqId,
+  refSeqId,
+  queryLab = NULL,
+  refLab = NULL,
+  colorId = c("strand", "score")
 ) {
     ## Workflow ----
     if (is.null(queryLab)) queryLab <- "Query"
@@ -24,7 +32,7 @@ anchorDotPlot <- function(
 
     tmpData <- read.table(file = anchorPath, head = TRUE)
 
-    tmpData <- tmpData[which(tmpData$refChr   %in% refSeqId), ]
+    tmpData <- tmpData[which(tmpData$refChr %in% refSeqId), ]
     tmpData <- tmpData[which(tmpData$queryChr %in% querySeqId), ]
 
     toMb <- function(x) x / 1e6
@@ -48,18 +56,3 @@ anchorDotPlot <- function(
 
     return(p)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
-# Title:  GWAS Example Plots with rTASSEL
-# Author: Brandon Monier (brandon.monier@sdstate.edu)
-# Date:   05.15.26
+# Title:   GWAS Example Plots with rTASSEL
+# Author:  Brandon Monier
+# Created: 2026-05-15
 #
 # Self-contained end-to-end GWAS demo using the maize diversity panel (MDP)
 # data shipped with rTASSEL. The script:
@@ -34,12 +34,12 @@ rTASSEL::startLogger(filePath = NULL, verbose = FALSE)
 # Data ----
 
 ## All example inputs ship inside the package's extdata directory
-ext        <- system.file("extdata", package = "rTASSEL")
-geno_path  <- file.path(ext, "mdp_genotype.hmp.txt")
+ext <- system.file("extdata", package = "rTASSEL")
+geno_path <- file.path(ext, "mdp_genotype.hmp.txt")
 pheno_path <- file.path(ext, "mdp_phenotype.txt")
 
 ## Read genotype and phenotype tables separately ...
-tas_geno  <- readGenotypeTableFromPath(path = geno_path)
+tas_geno <- readGenotypeTableFromPath(path = geno_path)
 tas_pheno <- readPhenotypeFromPath(path = pheno_path)
 
 ## ... and join them into a single object usable by assocModelFitter().

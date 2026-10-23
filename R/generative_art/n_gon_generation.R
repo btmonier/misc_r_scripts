@@ -1,17 +1,15 @@
 #------------------------------------------------------------------------------
-# Title:         Function - n-gon Generator
-# Author:        Brandon Monier (brandon.monier@sdstate.edu)
-# Created:       2018-05-21 15:36:05 CDT
-# Last Modified: 2018-08-07 15:16:58 CDT
+# Title:   n-gon Generator
+# Author:  Brandon Monier
+# Created: 2018-05-21
 #------------------------------------------------------------------------------
-
 
 # n-gon generator
 .ngon <- function(n, s = 1, vert) {
     rho <- (2 * pi) / n
     h <- 0.5 * s * tan((pi / 2) - (pi / n))
-    r <-  sqrt(h^2 + (s / 2) ^ 2)
-    sRho <-  ifelse(n %% 2 == 0, (pi / 2 - rho/2), pi / 2)
+    r <- sqrt(h^2 + (s / 2)^2)
+    sRho <- ifelse(n %% 2 == 0, (pi / 2 - rho / 2), pi / 2)
     cumRho <- cumsum(c(sRho, rep(rho, n)))
     cumRho <- ifelse(cumRho > 2 * pi, cumRho - 2 * pi, cumRho)
 
@@ -38,15 +36,13 @@
 
 
 # The chaos game...
-chaosGame <- function(
-        sides = 3,
-        r = 0.5,
-        iter = 10000,
-        seq = c("random", "restrict"),
-        vertex_choice = NULL,
-        chaos = FALSE,
-        verbose = FALSE
-) {
+chaosGame <- function(sides = 3,
+                      r = 0.5,
+                      iter = 10000,
+                      seq = c("random", "restrict"),
+                      vertex_choice = NULL,
+                      chaos = FALSE,
+                      verbose = FALSE) {
     if (sides < 3) {
         stop("3 or more sides are needed to generate polygons.")
     }
@@ -64,20 +60,24 @@ chaosGame <- function(
     if (seq == "random" && is.null(vertex_choice)) {
         cho <- seq_len(sides)
     } else if (seq == "random" && length(vertex_choice) < sides) {
-        if (verbose) warning(
-            paste(
-                "Restricted vertices will not work with random sampling.",
-                "Using all vertices..."
+        if (verbose) {
+            warning(
+                paste(
+                    "Restricted vertices will not work with random sampling.",
+                    "Using all vertices..."
+                )
             )
-        )
+        }
         cho <- seq_len(sides)
     } else if (seq == "restrict" && is.null(vertex_choice)) {
-        if (verbose) message(
-            paste(
-                "Vertex restriction not implemented.",
-                "Using all vertices..."
+        if (verbose) {
+            message(
+                paste(
+                    "Vertex restriction not implemented.",
+                    "Using all vertices..."
+                )
             )
-        )
+        }
         cho <- seq_len(sides)
     } else if (seq == "restrict" && !is.vector(vertex_choice)) {
         stop("Please use vector for vertex choices.")
@@ -161,11 +161,11 @@ print.chaosDF <- function(x, ...) {
 
 summary.chaosDF <- function(x, ...) {
     cat("Chaos game metadata:\n")
-    cat("  Points............",      x$iter,  "\n")
-    cat("  Polygon sides.....",      x$sides, "\n")
-    cat("  r value...........",      x$r,     "\n")
-    cat("  Vertex choices....", "{", x$cho,   "}\n")
-    cat("  Sequencing type...",      x$seq,   "\n")
+    cat("  Points............", x$iter, "\n")
+    cat("  Polygon sides.....", x$sides, "\n")
+    cat("  r value...........", x$r, "\n")
+    cat("  Vertex choices....", "{", x$cho, "}\n")
+    cat("  Sequencing type...", x$seq, "\n")
 }
 
 boxplot.chaosDF <- function(x, ...) {
@@ -178,7 +178,6 @@ boxplot.chaosDF <- function(x, ...) {
         col = c("#cccccc", "#4286f4")
     )
 }
-
 
 
 plot.chaosDF <- function(x, ...) {
@@ -204,5 +203,4 @@ plot.chaosDF <- function(x, ...) {
         ),
         ...
     )
-
 }

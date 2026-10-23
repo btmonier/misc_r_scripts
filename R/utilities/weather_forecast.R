@@ -1,18 +1,12 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   weather_forecast.R
-# Description:   Scrape weather.gov for weather data
-# Author:        Brandon Monier
-# Created:       2020-06-07 at 15:34:32
-# Last Modified: 2020-06-09 at 15:18:21
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to obtain weather forecast
-#    data for specific cities using weather.gov
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Scrape weather.gov for weather data
+# Author:  Brandon Monier
+# Created: 2020-06-07
+#
+# Obtain weather forecast data for specific cities using weather.gov
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -63,7 +57,6 @@ cols <- c(
     "rain",
     "thunder"
 )
-
 
 
 # === Get weather data (table) ======================================
@@ -130,7 +123,6 @@ df_wthr <- df_wthr %>%
 
 ## Inspect data frame (debug) ----
 print(df_wthr)
-
 
 
 # === Visualize =====================================================
@@ -212,13 +204,10 @@ start_stop <- c(
     df_wthr[[48, 1]]
 )
 
-plt_all <-  plt_all +
+plt_all <- plt_all +
     plot_annotation(
         title = "Weather forecast",
         subtitle = paste0(df_wthr[[1, 1]], " - ", df_wthr[[48, 1]]),
         caption = "source: weather.gov"
     )
 print(plt_all)
-
-
-

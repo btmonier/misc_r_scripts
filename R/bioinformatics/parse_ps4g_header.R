@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------
+# Title:   Parse a PS4G Header
+# Author:  Brandon Monier
+#
+# Read a PS4G file, split its gamete sets, and parse the gamete table in its
+# header.
+#------------------------------------------------------------------------------
+
 library(readr)
 
 
@@ -14,12 +22,16 @@ nums <- ps4g$gameteSet |>
     as.list() |>
     lapply(
         \(x) {
-            strsplit(x, ",") |> unlist() |> as.integer()
+            strsplit(x, ",") |>
+                unlist() |>
+                as.integer()
         }
     )
 
 
-uniqueNums <- nums |> unlist() |> unique()
+uniqueNums <- nums |>
+    unlist() |>
+    unique()
 
 
 lines <- readLines(ps4gPath)
@@ -47,9 +59,3 @@ header_tbl <- read_table(
 
 
 header_tbl$gameteIndex
-
-
-
-
-
-

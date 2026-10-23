@@ -1,3 +1,10 @@
+#------------------------------------------------------------------------------
+# Title:   Scientific Number Formatting
+# Author:  Brandon Monier
+#
+# Ideas for printing numbers in scientific notation with aligned columns.
+#------------------------------------------------------------------------------
+
 format_scientific <- function(x) {
     formatted <- sapply(x, function(num) {
         # Handle zero separately to avoid log10 issues
@@ -29,7 +36,7 @@ format_scientific <- function(x) {
         # Break m_str into parts: integer part and decimal part
         # We know m_str is always in the form: D.dd (1 digit before decimal since m in [1,10))
         int_part <- substr(m_str, 1, 1)
-        dec_part <- substr(m_str, 3, 4)  # two decimal digits
+        dec_part <- substr(m_str, 3, 4) # two decimal digits
 
         # Check if we have '.00'
         if (dec_part == "00") {
@@ -83,15 +90,17 @@ format_scientific <- function(x) {
         # 8: first exponent char (space or digit)
         # 9: second exponent char (digit)
 
-        final_str <- paste0(sign_char,
-                            int_part,
-                            dec_pt_char,
-                            dec_dig1,
-                            dec_dig2,
-                            "e",
-                            exp_sign_char,
-                            substr(exp_str, 1, 1),
-                            substr(exp_str, 2, 2))
+        final_str <- paste0(
+            sign_char,
+            int_part,
+            dec_pt_char,
+            dec_dig1,
+            dec_dig2,
+            "e",
+            exp_sign_char,
+            substr(exp_str, 1, 1),
+            substr(exp_str, 2, 2)
+        )
 
         final_str
     })
@@ -100,11 +109,12 @@ format_scientific <- function(x) {
 }
 
 # Example usage:
-test_numbers <- c(1.234342e+12, 2.340000e+02, 5.000000e+00, -1.230000e+05,
-                  1.230000e-04, 1.000000e+03, -1.000000e-06, 1.234000e+01)
+test_numbers <- c(
+    1.234342e+12, 2.340000e+02, 5.000000e+00, -1.230000e+05,
+    1.230000e-04, 1.000000e+03, -1.000000e-06, 1.234000e+01
+)
 
 format_scientific(test_numbers)
-
 
 
 align_numbers <- function(numbers) {
@@ -138,22 +148,6 @@ align_numbers <- function(numbers) {
 numbers <- c(123.456, 78.9, 5.6, 0.123)
 print(align_numbers(numbers, align_by = "decimal"))
 print(align_numbers(numbers, align_by = "lowest"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 align_numbers <- function(numbers) {
@@ -198,9 +192,3 @@ align_numbers <- function(numbers) {
 # Example usage:
 numbers <- c(123456.789, 78.9, 5.600, 0.123456, 42)
 print(align_numbers(numbers))
-
-
-
-
-
-

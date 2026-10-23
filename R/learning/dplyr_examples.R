@@ -1,8 +1,8 @@
-#-----------------------------------------------------#
-# Title:  An introduction to dplyr                    #
-# Author: Brandon Monier (brandon.monier@sdstate.edu) #
-# Date:   08.10.16                                    #
-#-----------------------------------------------------#
+#------------------------------------------------------------------------------
+# Title:   An introduction to dplyr
+# Author:  Brandon Monier
+# Created: 2016-08-10
+#------------------------------------------------------------------------------
 
 #-------
 # Prelim
@@ -19,6 +19,6 @@ df.tran
 #----------------
 
 # Filter
-filter(df.tran, grass.genus == 'panicum')
+filter(df.tran, grass.genus == "panicum")
 
-filter(df.tran, grass.genus == 'panicum', symbiont == 'myc')
+filter(df.tran, grass.genus == "panicum", symbiont == "myc")

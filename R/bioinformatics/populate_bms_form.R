@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------
+# Title:   Populate a BMS Form
+# Author:  Brandon Monier
+#
+# Fill a BMS observation sheet with rTASSEL phenotype and population structure
+# data.
+#------------------------------------------------------------------------------
+
 library(dplyr)
 library(readxl)
 library(magrittr)
@@ -40,8 +48,8 @@ bmsData %>%
         DESIGNATION = Taxa,
         ENTRY_NO,
         PLOT_NO,
-        EH_M_cm        = EarHT,
-        EDia_M_cm      = EarDia,
+        EH_M_cm = EarHT,
+        EDia_M_cm = EarDia,
         Dpoll = dpoll,
         Q1,
         Q2,
@@ -56,5 +64,3 @@ bmsData %>%
     ) %>%
     arrange(ENTRY_NO) %>%
     write_xlsx(path = "result.xlsx")
-
-

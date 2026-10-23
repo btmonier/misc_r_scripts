@@ -1,18 +1,13 @@
 #!/usr/bin/env Rscript
 
-#--------------------------------------------------------------------
-# Script Name:   algorithm_bubble_sort.R
-# Description:   Bubble sorting algoritm
-# Author:        Brandon Monier
-# Created:       2020-05-25 at 11:45:51
-# Last Modified: 2020-05-25 at 16:59:41
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
-# Detailed Purpose:
-#    The main purpose of this Rscript is to implement a bubble
-#    sorting algorithm in base R and visualize with `gganimate`
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Title:   Bubble Sort Algorithm
+# Author:  Brandon Monier
+# Created: 2020-05-25
+#
+# Implement a bubble sorting algorithm in base R and visualize with
+# `gganimate`
+#------------------------------------------------------------------------------
 
 # === Preamble ======================================================
 
@@ -30,11 +25,11 @@ colors <- c("#6DD5FA", "#2C3E50")
 
 
 ## Bubble sort algorithm ----
-bubbleSort <- function(x){
+bubbleSort <- function(x) {
     n <- length(x)
-    for(i in 1:(n - 1)){
-        for(j in 1:(n - i)){
-            if(x[j] > x[j + 1]){
+    for (i in 1:(n - 1)) {
+        for (j in 1:(n - i)) {
+            if (x[j] > x[j + 1]) {
                 temp <- x[j]
                 x[j] <- x[j + 1]
                 x[j + 1] <- temp
@@ -74,7 +69,6 @@ for (i in 1:(n - 1)) {
             gen   = gn + 1
         )
     }
-
 }
 gens <- do.call("rbind", gens)
 
@@ -102,7 +96,9 @@ anim_bubble <- plt_bubble +
 
 ### Create gif and save to disk
 mod <- floor(values / 5) # <- testing dynamic frame generation
-nframes <- gens$gen %>% unique() %>% length() * 2
+nframes <- gens$gen %>%
+    unique() %>%
+    length() * 2
 gganimate::animate(
     plot = anim_bubble,
     nframes = nframes,
@@ -115,5 +111,3 @@ gganimate::animate(
 
 ## Remove intermediate variables ----
 # rm(list = setdiff(ls(), lsf.str()))
-
-

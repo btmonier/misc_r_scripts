@@ -1,4 +1,10 @@
-# Get raw, filtered counts of SNP hits in DB
+#------------------------------------------------------------------------------
+# Title:   Raw SNP Hit Counts
+# Author:  Brandon Monier
+#
+# Count the filtered SNP hits for each marker across a set of chromosome
+# files.
+#------------------------------------------------------------------------------
 
 ## Load packages ----
 library(data.table)
@@ -21,7 +27,7 @@ countsAll <- lapply(seq_along(files), function(i) {
     loginfo(glue("-- Processing chromosome: {chromIDs[i]}..."))
     tmp <- data.table::fread(files[i], select = c("seqid", "snp_coord"), showProgress = TRUE)
     tmp$Marker <- paste0(tmp$seqid, "_", tmp$snp_coord)
-    
+
     loginfo("-- Getting counts...")
     setkey(tmp, "Marker")
     counts <- tmp[, .(count = .N), by = Marker]
