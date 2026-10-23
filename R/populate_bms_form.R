@@ -4,7 +4,7 @@ library(magrittr)
 
 
 bmsData <- readxl::read_excel(
-    path = "/home/bm646/Downloads/rTASSEL_Demo_wHapMap-1_NOLOC_PLOT_rTASSEL_Demo_wHapMap-PLOTDATA_faperez_AF_20230216_045607.xls",
+    path = "path/to/rTASSEL_Demo_wHapMap-1_NOLOC_PLOT_rTASSEL_Demo_wHapMap-PLOTDATA_faperez_AF_20230216_045607.xls",
     sheet = "Observation"
 )
 bmsData %<>%

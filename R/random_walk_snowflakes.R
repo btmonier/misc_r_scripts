@@ -199,10 +199,6 @@ for (plot in seq_len(total_plots)) {
 }
 
 
-## Remove intermediate variables ----
-rm(list = setdiff(ls(), lsf.str()))
-
-
 
 # === Iterate (test sigma variances on fixed seed) ==================
 
@@ -306,9 +302,5 @@ for (plot in seq_len(total_plots)) {
         dpi      = "retina"
     )
 }
-
-
-## Remove intermediate variables ----
-rm(list = setdiff(ls(), lsf.str()))
 
 

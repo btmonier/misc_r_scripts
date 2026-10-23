@@ -3,9 +3,9 @@
 library(SNPRelate)
 library(dartR)
 
-silicoPath  <- "../../Downloads/Report_DS21-6352_SilicoDArT_1.csv"
-mappingPath <- "../../Downloads/Report_DS21-6352_SNP_mapping_2.csv"
-snp2Path    <- "../../Downloads/Report_DS21-6352_SNP_2.csv"
+silicoPath  <- "path/to/Report_DS21-6352_SilicoDArT_1.csv"
+mappingPath <- "path/to/Report_DS21-6352_SNP_mapping_2.csv"
+snp2Path    <- "path/to/Report_DS21-6352_SNP_2.csv"
 
 
 silicoDartGl  <- dartR::gl.read.dart(silicoPath)

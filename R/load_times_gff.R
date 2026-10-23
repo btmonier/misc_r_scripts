@@ -3,8 +3,8 @@ library(microbenchmark)
 library(ggplot2)
 library(dplyr)
 
-gffPath <- "Downloads/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3.gz"
-gffPathNoZip <- "Downloads/Zm-B73-REFERENCE.gff3"
+gffPath <- "path/to/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3.gz"
+gffPathNoZip <- "path/to/Zm-B73-REFERENCE.gff3"
 
 results <- microbenchmark(
     suppressMessages(makeTxDbFromGFF(gffPath)),

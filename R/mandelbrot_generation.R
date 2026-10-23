@@ -126,8 +126,6 @@ if (save_to_disk) {
 }
 
 
-## Remove intermediate variables ----
 logging::loginfo("Finished!")
-rm(list = setdiff(ls(), lsf.str()))
 
 

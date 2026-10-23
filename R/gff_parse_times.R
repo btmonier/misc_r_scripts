@@ -1,7 +1,7 @@
 library(tictoc)
 
 # ## Preamble ----
-# gffPath <- "Downloads/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3"
+# gffPath <- "path/to/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3"
 # gffFileCon <- file(gffPath, "r")
 # gffLines <- readLines(gffFileCon)
 # close(gffFileCon)
@@ -99,7 +99,7 @@ library(tictoc)
 
 ## Take FINAL (2.172 seconds) ----
 tictoc::tic()
-gffPath <- "Downloads/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3"
+gffPath <- "path/to/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3"
 featureType <- "gene"
 
 gffFileCon <- file(gffPath, "r")

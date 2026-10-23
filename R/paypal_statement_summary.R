@@ -439,7 +439,7 @@ print_summary_report <- function(statements) {
 
 parse_cli_args <- function() {
     args <- commandArgs(trailingOnly = TRUE)
-    dir_path <- "C:/Users/brand/dl/test"
+    dir_path <- "."
     recursive <- FALSE
     export_csv <- NULL
 
@@ -458,7 +458,7 @@ parse_cli_args <- function() {
             cat(paste0(
                 "Usage: Rscript paypal_statement_summary.R [options]\n\n",
                 "  -d, --dir PATH      Directory of PayPal PDF statements ",
-                "(default: C:/Users/brand/dl/test)\n",
+                "(default: current directory)\n",
                 "  -r, --recursive     Include PDFs in subdirectories\n",
                 "  -o, --export PATH   Write combined transactions to CSV\n",
                 "  -h, --help          Show this message\n"

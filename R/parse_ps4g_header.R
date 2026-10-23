@@ -1,7 +1,7 @@
 library(readr)
 
 
-ps4gPath <- "~/Downloads/10taxa_ropebwt_ps4g.txt"
+ps4gPath <- "path/to/10taxa_ropebwt_ps4g.txt"
 
 ps4g <- read_tsv(
     ps4gPath,

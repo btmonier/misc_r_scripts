@@ -5,11 +5,10 @@
 # Last Modified: 2018-03-03 01:04:56 CST
 #------------------------------------------------------------------------------
 
-# Source and create directory
-setwd("C:/Users/Brandon Monier/Box Sync/misc-scripts-r")
-source("misc-avatars-02.R")
-dir.create(path = "test-output", showWarnings = FALSE)
-setwd("test-output/")
+# Source and create directory (run from the repository root)
+source("R/avatars_02.R")
+out_dir <- "test-output"
+dir.create(path = out_dir, showWarnings = FALSE)
 
 # Generate avatars
 av.iter <- function(reps) {
@@ -23,7 +22,7 @@ av.iter <- function(reps) {
         pb$tick()
         pad <- sprintf(num, as.numeric(i))
         main <- paste("Output", pad)
-        file <- paste0("av-out-", pad, ".png")
+        file <- file.path(out_dir, paste0("av-out-", pad, ".png"))
         Sys.sleep(0.5/reps)
         png(filename = file)
         ran.av(main = main)

@@ -7,8 +7,9 @@
 
 # Preamble
 
-## Set WD
-setwd("D:/Box Sync/misc-scripts-r/misc-r-excel")
+## Set paths (run from the repository root)
+template_path <- "data/misc-r-excel/template.xlsx"
+output_path   <- "template_output.xlsx"
 
 ## Load packages
 library(openxlsx)
@@ -16,7 +17,7 @@ library(openxlsx)
 
 
 # Add data to cell (openxlsx)
-wb <- loadWorkbook("template.xlsx")
+wb <- loadWorkbook(template_path)
 
 
 
@@ -109,7 +110,7 @@ meta_03 <- c(
 
 meta_04 <- c(
 	"",
-	"DATA PROCESSING PIPELINE"
+	"DATA PROCESSING PIPELINE",
 	paste(
 		"# Data processing steps include base-calling, alignment, filtering,",
 		"peak-calling, generation of normalized abundance measurements etc..."
@@ -145,7 +146,7 @@ meta_06 <- c(
 	"",
 	paste(
 		"# For paired-end experiments, list the 2 associated raw files,",
-		"and provide average insert size and standard deviation,"
+		"and provide average insert size and standard deviation,",
 		"if known. For SOLiD experiments, list the 4 file names",
 		"(include \"file name 3\" and \"file name 4\" columns)"
 	),
@@ -186,5 +187,5 @@ writeData(
 )
 
 
-saveWorkbook(wb, "template.xlsx", overwrite = TRUE)
+saveWorkbook(wb, output_path, overwrite = TRUE)
 

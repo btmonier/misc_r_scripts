@@ -197,7 +197,9 @@ cat("\014")
 
 ### ANOVA and post-hoc
 
-df.n15 <- read.delim("C:/Users/Brandon Monier/OD/School Work/Graduate School Research/PhD Stuff/Projects/2014 - BTM - Wheat N15/N15 Wheat Project - R Data Sets/N15 Wheat Project-Sehgal-d15N Reads.txt") # RStudio expedites this process greatly greatly
+## Set this to your local copy of the N15 wheat d15N reads file
+n15_path <- "path/to/N15 Wheat Project-Sehgal-d15N Reads.txt"
+df.n15 <- read.delim(n15_path)
 head(df.n15)
 summary(df.n15)
 

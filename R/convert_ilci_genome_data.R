@@ -1,8 +1,8 @@
 library(data.table)
 
 
-markerData <- fread("../../Downloads/geno.csv", header = TRUE)
-metaData   <- fread("../../Downloads/info_markers.csv")
+markerData <- fread("path/to/geno.csv", header = TRUE)
+metaData   <- fread("path/to/info_markers.csv")
 file <- "test.txt"
 
 metaData$alt_name <- paste0("S", metaData$Chrom_Sorghum_v301, "_", metaData$ChromPos_Sorghum_v301)

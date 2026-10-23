@@ -8,7 +8,7 @@ library(logging)
 
 ## Load files and parameters ----
 files <- list.files(
-    path = "../Downloads/trip_data",
+    path = "path/to/trip_data",
     full.names = TRUE
 )
 chromIDs <- gsub("^.*trip_data/|_fast_.*$", "", files)

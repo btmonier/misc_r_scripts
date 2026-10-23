@@ -16,12 +16,13 @@
 
 # === Preamble ======================================================
 
-## Load data
+## Load data (set `data_dir` to the folder with the example CSV files)
+data_dir <- "path/to/graph_data_tests"
 links <- readr::read_csv(
-    file = "~/Development/storage/graph_data_tests/Dataset1-Media-Example-EDGES.csv"
+    file = file.path(data_dir, "Dataset1-Media-Example-EDGES.csv")
 )
 nodes <- readr::read_csv(
-    file = "~/Development/storage/graph_data_tests/Dataset1-Media-Example-NODES.csv"
+    file = file.path(data_dir, "Dataset1-Media-Example-NODES.csv")
 )
 
 
