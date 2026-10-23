@@ -5,12 +5,15 @@
 # Author:  Brandon Monier
 # Created: 2019-11-23
 #
-# Generate mazes in R. We will (hopefully) make a "depth-first search"
-# algorithm...
+# Generate mazes in R using a "depth-first search" (recursive backtracker)
+# algorithm and render them with ggplot2 as a raster image layer.
 #
 # NOTE:
 #   i = row
 #   j = column
+#
+#   The maze is stored as a (2 * rows + 1) x (2 * cols + 1) pixel matrix
+#   where 0 = wall and 1 = passage. Cell (i, j) lives at pixel (2i, 2j).
 #------------------------------------------------------------------------------
 
 # === Preamble ======================================================
@@ -18,235 +21,112 @@
 ## Load packages ----
 library(ggplot2)
 library(magrittr)
-library(tibble)
 
 
 ## Global variables ----
-cols <- 15
-rows <- 5
-w <- 1
+rows <- 25
+cols <- 40
+seed <- NULL
+wall_col <- "#212121"
+path_col <- "white"
+fig_path <- "."
+fig_name <- paste0("maze_", rows, "x", cols, "_", Sys.Date(), ".png")
 
 
-# === Maze generation (I) ===========================================
+# === Maze generation ===============================================
 
-## Cell data set ----
-cell <- function(i,
-                 j,
-                 w = 1,
-                 top = TRUE,
-                 bottom = TRUE,
-                 left = TRUE,
-                 right = TRUE,
-                 visited = FALSE) {
-    line_color <- "white"
-    d_width <- 4
+## Unvisited neighbors of a cell ----
+unvisitedNeighbors <- function(cell, visited) {
+    offsets <- list(c(-1, 0), c(1, 0), c(0, -1), c(0, 1))
+    candidates <- lapply(offsets, function(o) cell + o)
 
-    fill_hex <- if (visited) "#ffbdbd" else "#8a8a8a"
+    keep <- vapply(candidates, function(n) {
+        n[1] >= 1 && n[1] <= nrow(visited) &&
+            n[2] >= 1 && n[2] <= ncol(visited) &&
+            !visited[n[1], n[2]]
+    }, logical(1))
 
-    l_d <- if (left) c(j, i, j, i + w) else rep(NA, d_width)
-    r_d <- if (right) c(j + w, i, j + w, i + w) else rep(NA, d_width)
-    t_d <- if (top) c(j, i + w, j + w, i + w) else rep(NA, d_width)
-    b_d <- if (bottom) c(j, i, j + w, i) else rep(NA, d_width)
-
-    line_data <- tibble::tibble(
-        #         left    right   top     bottom
-        xlmin = c(l_d[1], r_d[1], t_d[1], b_d[1]),
-        ylmin = c(l_d[2], r_d[2], t_d[2], b_d[2]),
-        xlmax = c(l_d[3], r_d[3], t_d[3], b_d[3]),
-        ylmax = c(l_d[4], r_d[4], t_d[4], b_d[4])
-    )
-
-    shape_data <- tibble::tibble(
-        xmin = j,
-        xmax = j + 1,
-        ymin = i,
-        ymax = i + 1,
-        fill = fill_hex
-    )
-
-    return(
-        list(
-            line_data = line_data,
-            shape_data = shape_data
-        )
-    )
+    return(candidates[keep])
 }
 
 
-## Randomly pick cell neighbor ---
-pickNeighbor <- function(prev, prev_hist, rows, cols) {
-    neighbors <- list(
-        top = c(prev[1] + 1, prev[2]),
-        bot = c(prev[1] - 1, prev[2]),
-        lft = c(prev[1], prev[2] - 1),
-        rgt = c(prev[1], prev[2] + 1)
-    )
+## Recursive backtracker (iterative) ----
+generateMaze <- function(rows, cols, seed = NULL) {
+    if (!is.null(seed)) set.seed(seed)
 
-    filt <- lapply(neighbors, function(i) {
-        all(i != 0 & i[1] <= rows & i[2] <= cols)
-    }) %>%
-        unlist()
+    maze <- matrix(0L, nrow = 2 * rows + 1, ncol = 2 * cols + 1)
+    visited <- matrix(FALSE, nrow = rows, ncol = cols)
 
-    neighbors <- neighbors[filt]
-    neighbors <- neighbors[!(neighbors %in% prev_hist)]
+    start <- c(sample(rows, 1), sample(cols, 1))
+    visited[start[1], start[2]] <- TRUE
+    maze[2 * start[1], 2 * start[2]] <- 1L
 
-    if (length(neighbors) == 0) {
-        the_one <- NULL
-    } else {
-        the_one <- neighbors[[sample(names(neighbors), 1)]]
-    }
+    stack <- vector("list", rows * cols)
+    stack[[1]] <- start
+    top <- 1
 
-    return(
-        list(
-            the_one = the_one
-        )
-    )
-}
+    while (top > 0) {
+        current <- stack[[top]]
+        neighbors <- unvisitedNeighbors(current, visited)
 
-
-## Navigate "random" path through grid ----
-pathFinder <- function(rows, cols, visit = 1, empty = 0) {
-    mat <- matrix(empty, nrow = rows, ncol = cols)
-    mat_hist <- list()
-    prev_hist <- list()
-
-    mat[1, 1] <- visit
-    mat_hist[[1]] <- mat
-
-    prev_hist[[1]] <- c(1, 1)
-    tmp <- pickNeighbor(
-        prev = c(1, 1),
-        prev_hist = prev_hist,
-        rows = rows,
-        cols = cols
-    )
-
-    mat[tmp$the_one[1], tmp$the_one[2]] <- visit
-    mat_hist[[2]] <- mat
-
-    i <- 1
-    repeat {
-        prev_hist[[i + 1]] <- tmp$the_one
-        tmp <- pickNeighbor(
-            prev = tmp$the_one,
-            prev_hist = prev_hist,
-            rows = rows,
-            cols = cols
-        )
-
-        if (is.null(tmp$the_one)) {
-            # message("Got cornered!")
-            break
-        } else {
-            # message("It's okay: ", i)
-            # message("TMP... ", tmp)
-            mat[tmp$the_one[1], tmp$the_one[2]] <- visit
-            mat_hist[[i + 2]] <- mat
+        if (length(neighbors) == 0) {
+            top <- top - 1
+            next
         }
-        i <- i + 1
+
+        nxt <- neighbors[[sample(length(neighbors), 1)]]
+        visited[nxt[1], nxt[2]] <- TRUE
+        maze[current[1] + nxt[1], current[2] + nxt[2]] <- 1L
+        maze[2 * nxt[1], 2 * nxt[2]] <- 1L
+
+        top <- top + 1
+        stack[[top]] <- nxt
     }
 
-    return(list(mat_hist = mat_hist, prev_hist = prev_hist))
-}
+    # Entrance (top-left) and exit (bottom-right)
+    maze[2, 1] <- 1L
+    maze[2 * rows, 2 * cols + 1] <- 1L
 
-
-## Show ----
-cell_iterator <- function(rows, cols, path_hist, ...) {
-    # Preamble
-    grid_data <- matrix(data = list(), nrow = rows, ncol = cols)
-    f1 <- function(x, y) all(x == y)
-
-    # Generate path aesthetics
-    for (i in seq_len(rows)) {
-        for (j in seq_len(cols)) {
-            if (any(mapply(f1, list(c(j, i)), path_hist))) {
-                tmp_cell <- cell(i, j, visited = TRUE)
-            } else {
-                tmp_cell <- cell(i, j)
-            }
-
-            grid_data[i, j][[1]] <- tmp_cell
-        }
-    }
-
-    # Grid data for ggplot2
-    tmp_ln <- sapply(
-        grid_data,
-        "[[",
-        "line_data",
-        simplify = FALSE
-    ) %>%
-        do.call("rbind", .)
-
-    tmp_sh <- sapply(
-        grid_data,
-        "[[",
-        "shape_data",
-        simplify = FALSE
-    ) %>%
-        do.call("rbind", .)
-
-    # Return finalized grid data
-    return(
-        list(
-            line_data = tmp_ln,
-            shape_data = tmp_sh
-        )
-    )
+    return(maze)
 }
 
 
 # === Visualize =====================================================
 
-## Path generation ----
-path_hist <- pathFinder(rows = rows, cols = cols)$prev_hist
+## Matrix to long data frame ----
+mazeToDf <- function(maze) {
+    df <- expand.grid(y = seq_len(nrow(maze)), x = seq_len(ncol(maze)))
+    df$value <- as.vector(maze)
+    return(df)
+}
 
 
-## Iterate ----
-cell_all <- cell_iterator(rows = rows, cols = cols, path_hist = path_hist)
+## Raster plot ----
+plotMaze <- function(maze_df, wall_col = "#212121", path_col = "white") {
+    ggplot(maze_df, aes(x = x, y = y, fill = factor(value))) +
+        geom_raster() +
+        scale_fill_manual(values = c("0" = wall_col, "1" = path_col)) +
+        scale_y_reverse() +
+        coord_equal(expand = FALSE) +
+        theme_void() +
+        theme(legend.position = "none")
+}
 
 
-## Plot ----
-cell_plot <- ggplot() +
-    geom_rect(
-        mapping = aes(
-            xmin = xmin,
-            xmax = xmax,
-            ymin = ymin,
-            ymax = ymax
-        ),
-        fill = cell_all$shape_data$fill,
-        data = cell_all$shape_data,
-    ) +
-    geom_segment(
-        mapping = aes(
-            x    = xlmin,
-            y    = ylmin,
-            xend = xlmax,
-            yend = ylmax
-        ),
-        data = cell_all$line_data,
-    ) +
-    xlab("x") +
-    ylab("y") +
-    scale_x_continuous(breaks = seq(1, cols + 1, 1)) +
-    scale_y_continuous(breaks = seq(1, rows + 1, 1)) +
-    coord_equal(xlim = seq_len(cols + 1), ylim = seq_len(rows + 1))
-cell_plot %>% print()
+## Generate, plot, and save ----
+maze <- generateMaze(rows = rows, cols = cols, seed = seed)
 
+maze_plot <- maze %>%
+    mazeToDf() %>%
+    plotMaze(wall_col = wall_col, path_col = path_col)
+maze_plot %>% print()
 
-# === TEST ==========================================================
-
-# ## Iterate through path example ----
-# mat_hist <- pathFinder(rows = rows, cols = cols)$mat_hist
-# for (i in seq_len(length(mat_hist))) {
-#     par(mar = c(2, 2, 2, 2), pty = "s")
-#     image(
-#         mat_hist[[i]],
-#         col = c("gray92", "#ff4949"),
-#         xaxt = "n",
-#         yaxt = "n",
-#         main = paste0("Iteration: ", i)
-#     )
-#     box(col = "gray92")
-# }
+ggsave(
+    filename = fig_name,
+    plot     = maze_plot,
+    device   = "png",
+    path     = fig_path,
+    width    = ncol(maze) / 10,
+    height   = nrow(maze) / 10,
+    dpi      = 150
+)
