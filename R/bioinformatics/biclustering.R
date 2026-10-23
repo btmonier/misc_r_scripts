@@ -7,8 +7,8 @@
 # Preamble ----
 
 ## Load packages
-require(QUBIC)
-require(pheatmap)
+library(QUBIC)
+library(pheatmap)
 
 ## Make matrix - binary
 samp2 <- sample(x = c(1, -1), size = 2500, replace = TRUE)

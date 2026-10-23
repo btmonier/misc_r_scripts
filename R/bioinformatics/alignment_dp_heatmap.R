@@ -22,8 +22,8 @@
 # Preamble ----
 
 ## Load packages
-require(ggplot2)
-require(patchwork)
+library(ggplot2)
+library(patchwork)
 
 
 # Functions ----

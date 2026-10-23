@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 
 # Source and create directory (run from the repository root)
-source("R/avatars_02.R")
+source("R/generative_art/avatars_02.R")
 out_dir <- "test-output"
 dir.create(path = out_dir, showWarnings = FALSE)
 

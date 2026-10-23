@@ -70,7 +70,7 @@ if (is.null(opt$out)) stop("Output path not supplied")
 ## Source functions ----
 logging::loginfo("Sourcing external file...")
 tryCatch(
-    suppressWarnings(source("n_gon_generation.R")),
+    suppressWarnings(source("R/generative_art/n_gon_generation.R")),
     error = function(e) {
         logging::logerror("File does not exist")
         stop("stopping script", call. = FALSE, domain = NA)

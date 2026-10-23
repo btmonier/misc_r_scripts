@@ -22,9 +22,9 @@
 
 ## Load packages
 suppressPackageStartupMessages({
-    require(rTASSEL)
-    require(ggplot2)
-    require(patchwork)
+    library(rTASSEL)
+    library(ggplot2)
+    library(patchwork)
 })
 
 ## Start TASSEL's Java logger (console-only when filePath = NULL)

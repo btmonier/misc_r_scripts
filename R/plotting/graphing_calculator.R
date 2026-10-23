@@ -9,7 +9,7 @@
 #---------
 
 # Load packages
-require(ggplot2)
+library(ggplot2)
 
 
 #------------------

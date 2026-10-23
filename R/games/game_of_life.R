@@ -119,7 +119,7 @@ fig_height <- 800
 
 
 ## Initial matrix ----
-source("data/game_of_life_dictionary.R")
+source("R/games/game_of_life_dictionary.R")
 area_test <- ls_gol[["chaos_big"]]
 
 

@@ -8,31 +8,15 @@
 # Preamble
 #---------
 
-# Load/upgrade Bioconductor packages
-source('https://bioconductor.org/biocLite.R')
-
-tmp <- c('GEOquery', 'DESeq', 'airway')
-
-biocLite(
-  pkgs            = tmp,
-  suppressUpdates = FALSE,
-  siteRepos       = character()
-)
-
-suppressPackageStartupMessages(library('DESeq'))
-suppressPackageStartupMessages(library('GEOquery'))
-suppressPackageStartupMessages(library('airway'))
-
-# Load other packages
-pack.man <- function(pkg){
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg)) 
-    install.packages(new.pkg, dependencies = TRUE)
-  sapply(pkg, require, character.only = TRUE)
-}
-
-tmp <- c('ggplot2', 'dplyr', 'tidyr')
-suppressPackageStartupMessages(pack.man(tmp))
+# Load packages
+suppressPackageStartupMessages({
+  library(DESeq)
+  library(GEOquery)
+  library(airway)
+  library(ggplot2)
+  library(dplyr)
+  library(tidyr)
+})
 
 # Get GEO data
 dir     <- system.file('extdata', package = 'airway')
